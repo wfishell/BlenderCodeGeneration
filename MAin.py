@@ -9,7 +9,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
-openai.api_key = 'sk-K2WrVhXmkuTW8nsHnPGc9A48E5g36Dk140q6SaVlBTT3BlbkFJBfrW5eNuL0fTfBHB1Hmqx3RRaBhExak3wD0tHEjHAA'
+openai.api_key = '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'
 class animationgeneartion:
     def __init__(self,prompt,filename):
         #in future iterations we should enable specifying specific chatgpt versions
