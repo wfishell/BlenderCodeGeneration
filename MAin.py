@@ -35,7 +35,7 @@ class animationgeneartion:
                 messages=[
                     {"role": "system", "content": "You are a helpful assistant."},
                     {"role": "user",
-                     "content": f"{text_prompt} Ensure there is no clipping in the blender script so all object will be fully visable when rendered"
+                     "content": f"{text_prompt}. Ensure all objects and collections are visible in render and set camera=bpy.context.scene"
                                 f" .return the code in with backticks like this ``` at the start and end of the program and format it like python. Lastly, always save it as a blend file to this path {self.filename} and assume no objects have been created and stop including the word 'python' in there unless it is part of a piece of code. "
                                 f"Also always make sure bpy is defined"},
                 ],
@@ -66,7 +66,7 @@ class animationgeneartion:
 
             # Modify the prompt to retry with additional guidance
             print(extracted_code)
-            new_prompt = f"{extracted_code} this was returning an error {e} can you modify this code so that it addresses this error."
+            new_prompt = f"{extracted_code} this was returning an error {e} can you modify this code so that it addresses this error. Ensure all objects are in field of view when rendered."
             print("Retrying with modified prompt...")
 
             # Retry the function with the new prompt
@@ -125,8 +125,15 @@ class UploadFile:
 
 if __name__=='__main__':
     #Name File Name +Animation or Image. for example PlanetaryOrbitAnimation.blend
-    testinstance=animationgeneartion("Generate me a Python script of a blender animation of planets orbitting around the sun. Please use color for the different colors for the different planets",
-                        '/Users/will/PycharmProjects/pythonProject8/PlanetaryOrbit.blend')
+    testinstance=animationgeneartion("Create me a python script for an animation blender file of the planets in orbit. Use different colors for each of the planets, and make sure to have movement",
+                        '/Users/will/PycharmProjects/pythonProject8/PlanetaryOrbitAnimation.blend')
     code=testinstance.chat_with_gpt4(testinstance.prompt)
-    fileupload=UploadFile('PlanetaryOrbit.blend')
+    fileupload=UploadFile('PlanetaryOrbitAnimation.blend')
     fileupload.upload_file_to_drive(fileupload.filename,fileupload.filename,"application/x-blender")
+    prompt_file='/Users/will/PycharmProjects/pythonProject8/PlanetaryOrbitAnimation.txt'
+    with open(prompt_file, "w") as file:
+        # Write some text to the file
+        file.write(testinstance.prompt)
+    fileupload=UploadFile('PlanetaryOrbitAnimation.txt')
+    fileupload.upload_file_to_drive(fileupload.filename,fileupload.filename,"text/plain")
+
