@@ -217,7 +217,7 @@ if __name__=='__main__':
 
     Prompt=("Create me a python script for a quilt falling through the air onto a sphere.")
     # First Instance
-    ParentFolder=MassUpload('Quilt')
+    ParentFolder=MassUpload('QuiltFallingOnSphereo1')
     ParentFolderID=ParentFolder.create_subfolder()
     SubFolderID_LST=[]
     for i in range (0,5):
