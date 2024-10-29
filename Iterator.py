@@ -1,5 +1,99 @@
 from Packages import *
-from Main import *
+# If modifying these SCOPES, delete the token.pickle file.
+SCOPES = ['https://www.googleapis.com/auth/drive.file']
+credentials = service_account.Credentials.from_service_account_file(
+    'credentials.json', scopes=SCOPES)
+
+# Build the Google Drive service
+drive_service = build('drive', 'v3', credentials=credentials)
+def GetCode(folder_id):
+    drive_service = authenticate_drive()
+    results = drive_service.files().list(
+        q=f"'{folder_id}' in parents and mimeType='application/json'",
+        spaces='drive',
+        fields="nextPageToken, files(id, name)").execute()
+
+    items = results.get('files', [])
+
+    if not items:
+        print('No JSON files found.')
+    else:
+        # Assuming we are looking for the first JSON file in the folder
+        json_file = items[0]
+        print(f"Found JSON file: {json_file['name']} (ID: {json_file['id']})")
+
+        # Download the JSON file content
+        request = drive_service.files().get_media(fileId=json_file['id'])
+        fh = io.BytesIO()
+        downloader = MediaIoBaseDownload(fh, request)
+
+        done = False
+        while not done:
+            status, done = downloader.next_chunk()
+            print(f"Download {int(status.progress() * 100)}%.")
+
+        # Read the JSON content
+        fh.seek(0)
+        json_content = json.load(fh)
+    return json_content['Code']
+def authenticate_drive():
+    """Authenticate using a Service Account and return the Drive service."""
+    # Load the service account credentials
+    SCOPES = ['https://www.googleapis.com/auth/drive.file']
+    credentials = service_account.Credentials.from_service_account_file(
+        'credentials.json', scopes=SCOPES
+    )
+
+    # Build the Google Drive service
+    return build('drive', 'v3', credentials=credentials)
+
+class UploadFile:
+    def __init__(self,filename):
+        self.filename=filename
+
+    def upload_file_to_drive(self, file_name, file_path, mime_type, ParentID):
+        """Upload a file to Google Drive using the authenticated service."""
+        drive_service = authenticate_drive()
+
+        # File metadata to specify the file name and folder (optional)
+        file_metadata = {
+            'name': file_name,
+            'parents': [ParentID]  # Optional: Folder ID
+        }
+
+        # MediaFileUpload handles the file to upload
+        media = MediaFileUpload(file_path, mimetype=mime_type)
+
+        # Upload the file to Google Drive
+        file = drive_service.files().create(
+            body=file_metadata,
+            media_body=media,
+            fields='id'
+        ).execute()
+
+        print(f"File uploaded successfully, File ID: {file.get('id')}")
+class MassUpload:
+    def __init__(self,FolderName,ParentID='1VYfJiunHJ8i8JPQIN5IIp8ISr9jp7ni8'):
+        self.FolderName = FolderName
+        self.ParentID = ParentID
+    def create_subfolder(self):
+        drive_service = authenticate_drive()
+        """Create a subfolder inside a parent folder on Google Drive."""
+        folder_metadata = {
+            'name': self.FolderName,
+            'mimeType': 'application/vnd.google-apps.folder',
+            'parents': [self.ParentID]  # The ID of the parent folder
+        }
+
+        # Create the subfolder
+        subfolder = drive_service.files().create(
+            body=folder_metadata,
+            fields='id'
+        ).execute()
+
+        print(f"Subfolder created successfully, Subfolder ID: {subfolder.get('id')}")
+        return subfolder.get('id')
+
 class Kinograph:
     def extractImages(self,video_stream, folder_id, N):
         count = 0
@@ -171,9 +265,9 @@ class LLMAnalysis:
         return self.extract_backticks_code(response_content)[0]
     def ProvideFeedback(self,preferred_set):
         if preferred_set.find('2') != -1 or preferred_set.find('second') != -1:
-            preferred_set_photos=self.FolderID_2
+            preferred_set_photos=self.set_2
         elif preferred_set.find('1') != -1 or preferred_set.find('first') != -1:
-            preferred_set_photos=self.FolderID_1
+            preferred_set_photos=self.set_1
         else:
             self.CompareKinographs()
         messages = [
@@ -182,7 +276,7 @@ class LLMAnalysis:
                 "content": [
                     {
                         "type": "text",
-                        "text": f"provide 3 sentences of feedback on this kinograph on what can be addressed to improve the animation to better fit the prompt: {self.prompt}."
+                        "text": f"provide 1 sentences of feedback on this kinograph on what can be addressed to improve the animation to better fit the prompt: {self.prompt}."
                                 f"Do not provide any code just constructive feeback"
                     }
                 ]
@@ -212,15 +306,21 @@ class LLMAnalysis:
         with open(analysis_file, "w") as file:
             # Write some text to the file
             file.write(response_content)
-        fileupload = UploadFile('ImrpovementPlan.txt')
+        fileupload = UploadFile('ImprovementPlan.txt')
         if preferred_set.find('2') != -1 or preferred_set.find('second') != -1:
             fileupload.upload_file_to_drive(fileupload.filename, fileupload.filename, "text/plain", self.FolderID_2)
         elif preferred_set.find('1') != -1 or preferred_set.find('first') != -1:
             fileupload.upload_file_to_drive(fileupload.filename, fileupload.filename, "text/plain", self.FolderID_1)
-        return analysis_file
+        return response_content
 
     def GetParentFolder(self,preferred_set):
 
+        if preferred_set.find('2') != -1 or preferred_set.find('second') != -1:
+            subfolder_id=self.FolderID_2
+        elif preferred_set.find('1') != -1 or preferred_set.find('first') != -1:
+            subfolder_id=self.FolderID_1
+        else:
+            self.CompareKinographs()
 
         drive_service = authenticate_drive()
         # Fetch the metadata of the subfolder
@@ -264,28 +364,131 @@ class LLMAnalysis:
             fh.seek(0)
             json_content = json.load(fh)
         return json_content['Code']
+class FirstCycle:
+    def __init__(self, FileName1, FolderID1, prompt):
+        self.FileName1 = FileName1
+        self.FolderID1 = FolderID1
+        self.prompt=prompt
+        self.Kinograph=Kinograph()
+    def encode_image_to_base64(self,image_path):
+        with open(image_path, "rb") as image_file:
+            base64_image = base64.b64encode(image_file.read()).decode('utf-8')
+        return base64_image
+
+    def DownloadKinograph(self,folder_id):
+        drive_service = authenticate_drive()
+        query = f"'{folder_id}' in parents and mimeType contains 'image/'"
+        results = drive_service.files().list(q=query, fields="files(id, name)").execute()
+        items = results.get('files', [])
+        if not items:
+            print("No files found.")
+            return None
+        file_path = []
+
+        for item in items:
+
+            # Get the file ID
+            file_id = item['id']
+            # Download the file stream
+            request = drive_service.files().get_media(fileId=file_id)
+            fh = io.BytesIO()
+            downloader = MediaIoBaseDownload(fh, request)
+            done = False
+
+            while done is False:
+                status, done = downloader.next_chunk()
+                print(f"Download {int(status.progress() * 100)}%.")
+                fh.seek(0)  # Go back to the beginning of the BytesIO stream
+            with tempfile.NamedTemporaryFile(delete=False, suffix='.jpeg') as temp_file:
+                fh.seek(0)  # Ensure we're at the beginning of the stream
+                temp_file.write(fh.read())
+                temp_file_path = temp_file.name
+                file_path.append(temp_file_path)
+        base64_image_list = []
+        for i in file_path:
+            base64_image_list.append(self.encode_image_to_base64(i))
+        return base64_image_list
+    def FirstCycle(self):
+        VideoStream=self.Kinograph.get_file_stream(self.FileName1, self.FolderID1)
+        SubFolder=self.Kinograph.extractImages(VideoStream, self.FolderID1, 20)
+        Image_Set=self.DownloadKinograph(SubFolder)
+        messages = [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": f"provide 1 sentences of feedback on this kinograph on what can be addressed to improve the animation to better fit the prompt and make the animation more real: {self.prompt}."
+                                f"Do not provide any code just constructive feeback"
+                    }
+                ]
+            }
+        ]
+
+        # Adding images from set_1
+        for base64_image in Image_Set:
+            messages[0]['content'].append({
+                "type": "image_url",
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{base64_image}"
+                }
+            })
+
+        # Make the API call
+        response = openai.ChatCompletion.create(
+            model="gpt-4-turbo",
+            messages=messages,
+            max_tokens=1000,
+        )
+
+        # Extract the response content
+        response_content = response['choices'][0]['message']['content']
+        print(response_content)
+        analysis_file = 'ImprovementPlan.txt'
+        with open(analysis_file, "w") as file:
+            # Write some text to the file
+            file.write(response_content)
+        fileupload = UploadFile('ImprovementPlan.txt')
+        fileupload.upload_file_to_drive(fileupload.filename, fileupload.filename, "text/plain", SubFolder)
+        return response_content
 class FullCycle:
     def __init__(self, FileName1, FileName2, FolderID1, FolderID2):
         self.FileName1 = FileName1
         self.FileName2 = FileName2
         self.FolderID1 = FolderID1
         self.FolderID2 = FolderID2
-    def fullCycle(self):
-        kinograph1 = Kinograph()
-        VideoStream1 = kinograph1.get_file_stream(self.FileName1, self.FolderID1)
-        kinograph2 = Kinograph()
-        VideoStream2 = kinograph2.get_file_stream(self.FileName2, self.FolderID2)
-        SubFolder1 = kinograph1.extractImages(VideoStream1, self.FolderID1, 20)
-        SubFolder2 = kinograph2.extractImages(VideoStream2, self.FolderID2, 20)
+    def Cylce(self):
+        if self.CheckForKinograph(self.FolderID1)==False:
+
+            kinograph1 = Kinograph()
+            VideoStream1 = kinograph1.get_file_stream(self.FileName1, self.FolderID1)
+            SubFolder1 = kinograph1.extractImages(VideoStream1, self.FolderID1, 20)
+        else:
+            SubFolder1=self.CheckForKinograph(self.FolderID1)
+        if self.CheckForKinograph(self.FolderID2)==False:
+            kinograph2 = Kinograph()
+            VideoStream2 = kinograph2.get_file_stream(self.FileName2, self.FolderID2)
+            SubFolder2 = kinograph2.extractImages(VideoStream2, self.FolderID2, 20)
+        else:
+            SubFolder2=self.CheckForKinograph(self.FolderID2)
         Analysis_Test = LLMAnalysis(SubFolder1, SubFolder2, 'Create an animation of balls bouncing')
         preferred_set = Analysis_Test.CompareKinographs()
         print(preferred_set)
         Code = Analysis_Test.GetPreviousCodeGeneration(preferred_set)
         print(Code)
-        ImprovementPlan=Analysis_Test.GetParentFolder(preferred_set)
+        ImprovementPlan=Analysis_Test.ProvideFeedback(preferred_set)
+        print(ImprovementPlan)
         return Code,ImprovementPlan
-
+    def CheckForKinograph(self, folder_id, folder_name='Animation Kinograph'):
+        drive_service = authenticate_drive()
+        query = f"mimeType='application/vnd.google-apps.folder' and name='{folder_name}' and '{folder_id}' in parents"
+        results = drive_service.files().list(q=query, fields="files(id, name)").execute()
+        items = results.get('files', [])
+        
+        if items:
+            return items[0]['id']  # Returns True and the folder ID if found
+        return False    # Returns False and None if not found
 if __name__ == '__main__':
     CycleInstance=FullCycle('BouncingBalls2.mp4','MultipleBallsBouncing_o1.mp4',
               '19DpaJNOCZYj6hqv-TB171EqfgPt9hUUA','1-dTeKObHrL_EuHkkdXIV7jeK6swwjHMl')
-    Code=CycleInstance.fullCycle()
+    Code=CycleInstance.Cycle()

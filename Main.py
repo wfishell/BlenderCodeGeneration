@@ -1,4 +1,4 @@
-from Iteration import *
+from Iterator import *
 from Packages import *
 class InterpreterError(Exception): pass
 
@@ -129,11 +129,16 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
                         "role": "user",
                         "content": (
                             f"{text_prompt}."
-                            f"Use {self.TemplateCode} and APIs compatiable with blender 4.2.1 as a general template to improve the quality of the animation "
+                            f"Use {self.TemplateCode} as a general template to improve the quality of the animation "
                             f"Return the code enclosed in triple backticks like ``` at both the start and end of the code section. "
-                            f"Lastly, always save it as a blend file to this path {self.filename} and assume no objects or functions have been created."
+                            f"Lastly, always save it as a blend file to this path {self.filename}"
                             f"Do not assign a rendering resolution and remove any assigned rendering resolution."
-                            f"Do not use a main() class and avoid attribute errors"
+                            f"assume no objects or functions have been created."
+                            f"Do not use a main() class and avoid attribute errors."
+                            f"Ensure the Cell Fracture add-on is properly enabled and use the correct operator name for fracturing."
+                            f"If the cell_fracture_operator is not found, try using 'object.add_fracture_cell_objects' instead."
+                            f"Always check if an add-on or operator exists before using it."
+                            f"Provide alternative methods or error handling if certain operations fail."
                         ),
                     },
                 ],
@@ -208,118 +213,11 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
 
 
 
-
-# If modifying these SCOPES, delete the token.pickle file.
-SCOPES = ['https://www.googleapis.com/auth/drive.file']
-credentials = service_account.Credentials.from_service_account_file(
-    'credentials.json', scopes=SCOPES)
-
-# Build the Google Drive service
-drive_service = build('drive', 'v3', credentials=credentials)
-def GetParentFolder(subfolder_id):
-    drive_service = authenticate_drive()
-    # Fetch the metadata of the subfolder
-    file = drive_service.files().get(fileId=subfolder_id, fields='id, name, parents').execute()
-
-    # Check if the subfolder has a parent and print it
-    if 'parents' in file:
-        parent_id = file['parents'][0]
-        print(f"Parent Folder ID: {parent_id}")
-    else:
-        print("This folder has no parent.")
-    return parent_id
-def GetCode(folder_id):
-    drive_service = authenticate_drive()
-    results = drive_service.files().list(
-        q=f"'{folder_id}' in parents and mimeType='application/json'",
-        spaces='drive',
-        fields="nextPageToken, files(id, name)").execute()
-
-    items = results.get('files', [])
-
-    if not items:
-        print('No JSON files found.')
-    else:
-        # Assuming we are looking for the first JSON file in the folder
-        json_file = items[0]
-        print(f"Found JSON file: {json_file['name']} (ID: {json_file['id']})")
-
-        # Download the JSON file content
-        request = drive_service.files().get_media(fileId=json_file['id'])
-        fh = io.BytesIO()
-        downloader = MediaIoBaseDownload(fh, request)
-
-        done = False
-        while not done:
-            status, done = downloader.next_chunk()
-            print(f"Download {int(status.progress() * 100)}%.")
-
-        # Read the JSON content
-        fh.seek(0)
-        json_content = json.load(fh)
-    return json_content['Code']
-def authenticate_drive():
-    """Authenticate using a Service Account and return the Drive service."""
-    # Load the service account credentials
-    SCOPES = ['https://www.googleapis.com/auth/drive.file']
-    credentials = service_account.Credentials.from_service_account_file(
-        'credentials.json', scopes=SCOPES
-    )
-
-    # Build the Google Drive service
-    return build('drive', 'v3', credentials=credentials)
-class UploadFile:
-    def __init__(self,filename):
-        self.filename=filename
-
-    def upload_file_to_drive(self, file_name, file_path, mime_type, ParentID):
-        """Upload a file to Google Drive using the authenticated service."""
-        drive_service = authenticate_drive()
-
-        # File metadata to specify the file name and folder (optional)
-        file_metadata = {
-            'name': file_name,
-            'parents': [ParentID]  # Optional: Folder ID
-        }
-
-        # MediaFileUpload handles the file to upload
-        media = MediaFileUpload(file_path, mimetype=mime_type)
-
-        # Upload the file to Google Drive
-        file = drive_service.files().create(
-            body=file_metadata,
-            media_body=media,
-            fields='id'
-        ).execute()
-
-        print(f"File uploaded successfully, File ID: {file.get('id')}")
-class MassUpload:
-    def __init__(self,FolderName,ParentID='1VYfJiunHJ8i8JPQIN5IIp8ISr9jp7ni8'):
-        self.FolderName = FolderName
-        self.ParentID = ParentID
-    def create_subfolder(self):
-        drive_service = authenticate_drive()
-        """Create a subfolder inside a parent folder on Google Drive."""
-        folder_metadata = {
-            'name': self.FolderName,
-            'mimeType': 'application/vnd.google-apps.folder',
-            'parents': [self.ParentID]  # The ID of the parent folder
-        }
-
-        # Create the subfolder
-        subfolder = drive_service.files().create(
-            body=folder_metadata,
-            fields='id'
-        ).execute()
-
-        print(f"Subfolder created successfully, Subfolder ID: {subfolder.get('id')}")
-        return subfolder.get('id')
-
 if __name__=='__main__':
 
-    Prompt=("Create me a python script for a blender animation of and object driving through a wall and shattering it. Use color.")
+    Prompt=("Create me a python script for a quilt falling through the air onto a sphere.")
     # First Instance
-    ParentFolder=MassUpload('Shatter Glass')
+    ParentFolder=MassUpload('QuiltFallingOnSphereo1')
     ParentFolderID=ParentFolder.create_subfolder()
     SubFolderID_LST=[]
     for i in range (0,5):
@@ -350,8 +248,11 @@ if __name__=='__main__':
             fileupload.upload_file_to_drive(fileupload.filename, fileupload.filename, "application/json", SubFolderID)
             SubFolderID_LST.append(SubFolderID)
         elif i==1:
+            FirstCycleInstance=FirstCycle(F"{ParentFolder.FolderName}{i-1}.mp4",SubFolderID_LST[0],Prompt)
+            ImprovementPlan=FirstCycleInstance.FirstCycle()
             FirstInstanceCode=GetCode(SubFolderID_LST[0])
-            AnimationInstance = animationgeneartion(Prompt,
+            AnimationInstance = animationgeneartion(F"Here is the original Prompt {AnimationInstance.prompt}"
+                                                                  F" and these are the critques {ImprovementPlan}",
                                                     F"{ParentFolder.FolderName}{i}.blend",
                                                     FirstInstanceCode)
             print(AnimationInstance.prompt)
@@ -377,9 +278,9 @@ if __name__=='__main__':
             fileupload.upload_file_to_drive(fileupload.filename, fileupload.filename, "application/json", SubFolderID)
             SubFolderID_LST.append(SubFolderID)
         else:
-            InstanceOfCycle,ImprovementPlan=FullCycle(F"{ParentFolder.FolderName}{i-2}.mp4",F"{ParentFolder.FolderName}{i-1}.mp4",
+            InstanceOfCycle=FullCycle(F"{ParentFolder.FolderName}{i-2}.mp4",F"{ParentFolder.FolderName}{i-1}.mp4",
                       SubFolderID_LST[i-2],SubFolderID_LST[i-1])
-            PreferredCode=InstanceOfCycle.fullCycle()
+            PreferredCode,ImprovementPlan=InstanceOfCycle.Cylce()
             AnimationInstance = animationgeneartion(Prompt,
                                                     F"{ParentFolder.FolderName}{i}.blend",
                                                     FirstInstanceCode)
