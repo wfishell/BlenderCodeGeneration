@@ -17,6 +17,7 @@ def GetCode(folder_id):
 
     if not items:
         print('No JSON files found.')
+        #trying to update iterator function
     else:
         # Assuming we are looking for the first JSON file in the folder
         json_file = items[0]
