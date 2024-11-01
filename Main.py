@@ -215,9 +215,9 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
 
 if __name__=='__main__':
 
-    Prompt=("Create me a python script for a quilt falling through the air onto a sphere.")
+    Prompt=("Create me a python script for a blender animation of a ball bouncing.")
     # First Instance
-    ParentFolder=MassUpload('QuiltFallingOnSphereo1')
+    ParentFolder=MassUpload('BouncingBallso1')
     ParentFolderID=ParentFolder.create_subfolder()
     SubFolderID_LST=[]
     for i in range (0,5):
