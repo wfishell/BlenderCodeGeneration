@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Embed Videos Side by Side with Looping</title>
+    <title>Embed Videos Side by Side with Autoplay</title>
     <style>
         .video-container {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
         }
-        .video-item {
-            flex: 1 1 35%; /* Reduced width to make videos smaller */
-            box-sizing: border-box;
-        }
+        .video-item video {
+    width: 320px; /* Desired width */
+    height: 180px; /* Calculated height based on aspect ratio */
+    display: block;
+    margin: 0 auto;
+}
         h2 {
             text-align: center;
         }
-        .video-item video {
-            width: 100%;
-            height: auto;
-        }
+   .video-item video {
+    width: 320px; /* Desired width */
+    height: 180px; /* Calculated height based on aspect ratio */
+    display: block;
+    margin: 0 auto;
+}
     </style>
 </head>
 <body>
@@ -27,7 +31,7 @@
     <div class="video-container">
         <div class="video-item">
             <h2>Quilt Falling</h2>
-            <video controls loop>
+            <video controls loop autoplay muted>
                 <source src="QuiltFalling01Video.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
@@ -35,7 +39,7 @@
 
         <div class="video-item">
             <h2>Orbits</h2>
-            <video controls loop>
+            <video controls loop autoplay muted>
                 <source src="Orbits01Video.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
