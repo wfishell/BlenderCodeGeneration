@@ -20,7 +20,7 @@
             display: block;
         }
 
-        h2 {
+        h1, h2 {
             text-align: center;
         }
 
@@ -29,6 +29,23 @@
             .video-item {
                 flex: 1 1 100%; /* Videos stack vertically on small screens */
             }
+        }
+
+        /* Styles for the Overview and Additional Information sections */
+        .section {
+            margin-top: 40px;
+            padding: 10px;
+        }
+
+        .section h2 {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        .section p {
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: justify;
         }
     </style>
 </head>
@@ -51,6 +68,29 @@
                 Your browser does not support the video tag.
             </video>
         </div>
+    </div>
+
+    <!-- Project Overview Section -->
+    <div class="section">
+        <h2>Project Overview</h2>
+        <p>
+            We are using large language models to generate animations in Blender by prompting the LLM to generate code 
+            which is used to create the animation. We have developed an iterative pipeline that generates an animation, 
+            then passes the finished product back into the LLM. The LLM critiques the animation based on how accurately 
+            it represents the inputted prompt and then provides an updated prompt along with the generated code for the 
+            next iteration of animation. This process offers clear insights into how LLMs can critique their own work 
+            and use that information to improve. It also provides interesting results in how LLMs transition from a prompt 
+            to the 3D space, showcasing their ability to handle the complexity of spatial and temporal reasoning in 3D environments.
+        </p>
+    </div>
+
+    <!-- Additional Information Section -->
+    <div class="section">
+        <h2>Templating</h2>
+        <p>
+            <!-- Content for the additional section -->
+            Here you can add any supplementary details, references, or resources related to your project.
+        </p>
     </div>
 </body>
 </html>
