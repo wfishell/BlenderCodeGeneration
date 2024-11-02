@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Embed Videos Side by Side</title>
+    <title>Embed Videos Side by Side with Looping</title>
     <style>
         .video-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px; /* Optional: Adds space between videos */
+            gap: 20px;
         }
         .video-item {
-            flex: 1 1 45%; /* Adjust the percentage to control the width */
+            flex: 1 1 35%; /* Reduced width to make videos smaller */
             box-sizing: border-box;
         }
         h2 {
             text-align: center;
+        }
+        .video-item video {
+            width: 100%;
+            height: auto;
         }
     </style>
 </head>
@@ -23,7 +27,7 @@
     <div class="video-container">
         <div class="video-item">
             <h2>Quilt Falling</h2>
-            <video width="100%" controls>
+            <video controls loop>
                 <source src="QuiltFalling01Video.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
@@ -31,7 +35,7 @@
 
         <div class="video-item">
             <h2>Orbits</h2>
-            <video width="100%" controls>
+            <video controls loop>
                 <source src="Orbits01Video.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
