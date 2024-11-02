@@ -1,21 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Embed Videos</title>
+    <title>Embed Videos Side by Side</title>
+    <style>
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Optional: Adds space between videos */
+        }
+        .video-item {
+            flex: 1 1 45%; /* Adjust the percentage to control the width */
+            box-sizing: border-box;
+        }
+        h2 {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>My Project Videos</h1>
+    <h1>Animation Generation Using Large Language Models</h1>
 
-    <h2>Video 1</h2>
-    <video width="600" controls>
-        <source src="QuiltFalling01Video.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+    <div class="video-container">
+        <div class="video-item">
+            <h2>Quilt Falling</h2>
+            <video width="100%" controls>
+                <source src="QuiltFalling01Video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
 
-    <h2>Video 2</h2>
-    <video width="600" controls>
-        <source src="Orbits01Video.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+        <div class="video-item">
+            <h2>Orbits</h2>
+            <video width="100%" controls>
+                <source src="Orbits01Video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
 </body>
 </html>
