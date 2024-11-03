@@ -113,4 +113,8 @@
             and use that information to improve. It also provides interesting results in how LLMs transition from a prompt 
             to the 3D space, showcasing their ability to handle the complexity of spatial and temporal reasoning in 3D environments.
         </p>
+    <div class="media-item">
+        <h2>Animation Generation Pipeline</h2>
+        <img src="AnimationGenerationCodeTemplate.png" alt="Animation Generation Code Template">
+    </div>
     </div>
