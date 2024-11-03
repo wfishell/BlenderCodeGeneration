@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
     <title>Embed Videos Side by Side with Autoplay</title>
