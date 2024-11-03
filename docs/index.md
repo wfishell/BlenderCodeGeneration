@@ -254,7 +254,10 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
   </style>
   
   <div class="media-item" style="width: 50%;">
-    <img src="Flowchart.png" alt="Kinograph Critique Flow Chart">
+    <figure>
+      <img src="Flowchart.png" alt="Kinograph Critique Flow Chart">
+      <figcaption>Kinograph Critique Flow Chart</figcaption>
+    </figure>
     <p>
       A kinograph is passed through to the LLM and critiqued against the original prompt, and this 
       updated prompt is used to generate the next iteration's code. This example depicts a bouncing 
@@ -267,6 +270,4 @@ balls and introducing varied movement patterns and heights of the bounces to add
 dynamism and interest to the animation.
     </pre>
   </div>
-
 </div>
-    </div>
