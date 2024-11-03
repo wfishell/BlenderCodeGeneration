@@ -64,11 +64,28 @@
             flex-shrink: 0; /* Prevent image from shrinking */
         }
 
-        .code-template p {
+        .code-template-content {
             flex: 1; /* Allow text to take remaining space */
+        }
+
+        .code-template-content h2 {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        .code-template-content p,
+        .code-template-content pre {
             font-size: 16px;
             line-height: 1.6;
             text-align: justify;
+        }
+
+        /* Style for Code Block */
+        pre {
+            background-color: #f4f4f4; /* Light background for readability */
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto; /* Handle long lines with horizontal scrolling */
         }
     </style>
 </head>
@@ -110,20 +127,32 @@
     <!-- Code Template Section -->
     <div class="code-template">
         <img src="AnimationGenerationCodeTemplate.png" alt="Initial Code Template">
+        <div class="code-template-content">
             <h2>Initial Code Template</h2>
-        <p>
-            This initial code template that is fed into the LLM creates an object, camera, and light source. 
-            This template helps the LLM in initializing code during the first iteration. Having the first iteration 
-            generate a proper animation ensures that successive iterations have a solid foundation to build upon. 
+            <p>
+                This initial code template that is fed into the LLM creates an object, camera, and light source. 
+                This template helps the LLM in initializing code during the first iteration. Having the first iteration 
+                generate a proper animation ensures that successive iterations have a solid foundation to build upon. 
+            </p>
+            <pre>
+# Sample code for the initial template
+object = bpy.data.objects.new("Object", None)
+camera = bpy.data.objects.new("Camera", bpy.data.cameras.new("Camera"))
+light = bpy.data.objects.new("Light", bpy.data.lights.new("Light", type='POINT'))
 
-            Prior to including the template code, the LLM was generating animations that didn't have movement, 
-            or contained no light source, or placed the camera so that it captured none of the animation. 
-            This made it much more difficult for the LLM to generate an animation that matches the prompt.
+# Position the camera
+camera.location = (5, -5, 5)
+camera.rotation_euler = (1.109, 0, 0.785)
 
-            Since including this template code, we have seen an improvement in the quality of the generated animations. 
-            These animations are more closely aligned with the prompt, have a lower number of errors, 
-            and enable us to have a standard starting point for each animation, making the results more replicable.
-        </p>
+# Add the light source
+light.location = (2, 2, 10)
+            </pre>
+            <p>
+                Since including this template code, we have seen an improvement in the quality of the generated animations. 
+                These animations are more closely aligned with the prompt, have a lower number of errors, 
+                and enable us to have a standard starting point for each animation, making the results more replicable.
+            </p>
+        </div>
     </div>
 </body>
 </html>
