@@ -21,14 +21,14 @@
             display: block;
         }
 
-        h1, h2 {
+        h1, h2, h3 {
             text-align: center;
         }
 
         /* Responsive Video Item for Smaller Screens */
         @media (max-width: 600px) {
-            .video-item {
-                flex: 1 1 100%; /* Videos stack vertically on small screens */
+            .video-item, .media-item {
+                flex: 1 1 100%; /* Items stack vertically on small screens */
             }
         }
 
@@ -87,6 +87,26 @@
             border-radius: 5px;
             overflow-x: auto; /* Handle long lines with horizontal scrolling */
         }
+
+        /* Media Container Styles */
+        .media-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Space between items */
+            margin-top: 20px;
+        }
+
+        .media-item {
+            flex: 1 1 calc(50% - 20px); /* Each item takes up 50% minus the gap */
+            box-sizing: border-box;
+        }
+
+        .media-item img,
+        .media-item video {
+            width: 100%; /* Media fills its container */
+            height: auto; /* Maintains aspect ratio */
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -125,14 +145,14 @@
     </div>
 
     <!-- Code Template Section -->
-        <div class="code-template-content">
-            <h2>Initial Code Template</h2>
-            <p>
-                This initial code template that is fed into the LLM creates an object, camera, and light source. 
-                This template helps the LLM in initializing code during the first iteration. Having the first iteration 
-                generate a proper animation ensures that successive iterations have a solid foundation to build upon. 
-            </p>
-            <pre>
+    <div class="code-template-content">
+        <h2>Initial Code Template</h2>
+        <p>
+            This initial code template that is fed into the LLM creates an object, camera, and light source. 
+            This template helps the LLM in initializing code during the first iteration. Having the first iteration 
+            generate a proper animation ensures that successive iterations have a solid foundation to build upon. 
+        </p>
+        <pre>
 import bpy
 
 # Clear existing mesh objects
@@ -193,13 +213,44 @@ bpy.ops.nla.bake(frame_start=start_frame, frame_end=end_frame,
 bpy.context.scene.render.image_settings.file_format = 'FFMPEG'
 bpy.context.scene.render.ffmpeg.format = 'MPEG4'
 bpy.context.scene.render.ffmpeg.codec = 'H264'
-            </pre>
-            <p>
-                Since including this template code, we have seen an improvement in the quality of the generated animations. 
-                These animations are more closely aligned with the prompt, have a lower number of errors, 
-                and enable us to have a standard starting point for each animation, making the results more replicable.
-            </p>
+        </pre>
+        <p>
+            Since including this template code, we have seen an improvement in the quality of the generated animations. 
+            These animations are more closely aligned with the prompt, have a lower number of errors, 
+            and enable us to have a standard starting point for each animation, making the results more replicable.
+        </p>
+    </div>
+
+    <!-- Kinographic Feedback Loop Section -->
+    <div class="code-template-content">
+        <h2>Kinographic Feedback Loop</h2>
+        <p>
+            Many LLMs are not able to take in an mp4 video as an input, so we have created a feedback loop that inputs a kinograph. This 
+            enables the LLM to critique its own work from each previous iteration. This loop has three steps:
+        </p>
+        <ol>
+            <li>Take the previous iteration's animation and convert it into a kinograph.</li>
+            <li>Input the previous animation's kinograph, the penultimate iteration's kinograph, and the original prompt into the LLM and compare which 
+                animation better matches the original prompt.</li> 
+            <li>Take the better performing animation and input it back into the LLM for feedback. This feedback is used to inform the next iteration's prompt.</li>
+        </ol>
+        <h3>Kinograph Conversion</h3>
+
+        <!-- New Media Content -->
+        <div class="media-container">
+            <div class="media-item">
+                <img src="OrbitsKinograph.jpg" alt="Kinograph Image">
+            </div>
+            <div class="media-item">
+                <video controls loop autoplay muted>
+                    <source src="Orbits01Video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
         </div>
+        <p>
+            The kinograph is a series of frames extracted from the animation, combined into a single image. This provides a visual summary of the animation's content, which the LLM can analyze to provide feedback. The side-by-side comparison of the kinograph and the original animation helps illustrate the differences and improvements made through each iteration.
+        </p>
     </div>
 </body>
 </html>
