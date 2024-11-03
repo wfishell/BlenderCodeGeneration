@@ -112,10 +112,22 @@
             it represents the inputted prompt and then provides an updated prompt along with the generated code for the 
             next iteration of animation. This process offers clear insights into how LLMs can critique their own work 
             and use that information to improve. It also provides interesting results in how LLMs transition from a prompt 
-            to the 3D space, showcasing their ability to handle the complexity of spatial and temporal reasoning in 3D environments.
+            to the 3D space, showcasing their ability to handle the complexity of spatial and temporal reasoning in 3D environments.We are using 4 templates to test the effectivesness of our pipeline:
+            <li>Create me a python script for a blender animation of a ball bouncing</li>
+            <li>Create me a python script for a blender animation of a quilt falling onto a sphere"</li>
+            <li>Create me a python script for an object driving through a wall</li>
+            <li>Create me a python script for an object driving through a wall</li>
+            <li>Create me a python script for a blender animation of a Planets orbitting around the Sun</li>
         </p>
     <div class="media-item">
-        <h2>Animation Generation Pipeline</h2>
+        <h2>Animation Generation Pipeline Issues</h2>
         <img src="AnimationGenerationProcess.png" alt="Animation Generation Code Template">
-    </div>
+    <div class="section">
+           <h2>Issues</h2>
+        <p>
+        While this process had has success there remain a few key issues with this framework that are creating difficulties         with increasing the complexity in the animations generated:
+        <li>There is randomness in the LLM's outputs which can cause variance in the output without any changes to the                  underlying code on our part. This is exemplified in instances of generating animations of orbits which vary                 vary in from highly detailed animations to black screens because the camera was not initialized properly. 
+            Currently we are looking to see if there is a way to create a seed to have more control over the LLMs                       output.</li>
+        <li>The LLM often references functions and objects that don't exist. This causes errors which are fixed by                     recursively calling the function and passing in the failed code with the error to see if the LLM can fix itself.             As the complexity of the prompt increases, the more the LLM tries to reference these nonexistant objects. We                have specified a max recursive depth to prevent endless queries to the LLM, but are still trying to figure out             how to reduce these errors for more complex animations</li> 
+        </p>
     </div>
