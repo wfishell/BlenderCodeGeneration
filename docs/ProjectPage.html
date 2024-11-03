@@ -85,12 +85,32 @@
     </div>
 
     <!-- Additional Information Section -->
-    <div class="section">
-        <h2>Templating</h2>
-        <p>
-            <!-- Content for the additional section -->
-            Here you can add any supplementary details, references, or resources related to your project.
-        </p>
-    </div>
-</body>
+    <head>
+        <style>
+            .section {
+                display: flex;
+                align-items: center;
+            }
+            .section img {
+                margin-right: 10px; /* Adjust the spacing between the image and the text */
+            }
+        </style>
+    </head>
+    <body>
+        <div class="section">
+            <img src="AnimationGenerationCodeTemplate.png" alt="Initial Code Template" width="100" height="100">
+            <p>
+                This initial code template that is fed into the LLM creates an object, camera and light source. 
+                This template helps the LLM in initializing code during the first iteration. Having the first iteration 
+                generate a proper animation ensures that succesive iterations have a solid foundation to build upon. 
+
+                Prior to including the template code, the LLM was generating animations that didn't have movement, or contained no
+                light source, or placed the camera so that it captured none of th animation. This makes it much more difficult for the LLM to generate an
+                animation that matches the prompt.
+
+                Since including this template code, we have seen an improvement in the quality of the generated animations. These animations are more closely
+                aligned with the prompt, have a lower number of errors, and enable us to to have a standard starting point for each animation which makes results more replicable.
+            </p>
+        </div>
+    </body>
 </html>
