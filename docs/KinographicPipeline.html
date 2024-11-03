@@ -2,6 +2,52 @@
 <html>
 <head>
     <title>Kinographic Feedback Loop</title>
+    <style>
+        /* General Page Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+
+        /* Flexbox Container Styles */
+        .media-container {
+            display: flex;
+            gap: 20px; /* Space between media items */
+            justify-content: center; /* Center content horizontally */
+            align-items: flex-start; /* Align items at the top */
+            flex-wrap: wrap; /* Wrap items on smaller screens */
+        }
+
+        /* Media Item Styles */
+        .media-item {
+            flex: 1;
+            max-width: 300px; /* Limit the width of each item */
+            box-sizing: border-box;
+        }
+
+        /* Image and Video Styles */
+        .media-item img,
+        .media-item video {
+            width: 100%; /* Make media fill the container */
+            height: auto; /* Maintain aspect ratio */
+            border: 1px solid #ddd; /* Optional border for better visual separation */
+            border-radius: 4px; /* Rounded corners for a nicer look */
+        }
+
+        /* Preformatted Text Styles */
+        pre {
+            background-color: #f4f4f4; /* Light grey background */
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto; /* Horizontal scrolling for long text */
+            font-size: 14px;
+            line-height: 1.5;
+        }
+    </style>
 </head>
 <body>
     <!-- Kinographic Conversion Section -->
