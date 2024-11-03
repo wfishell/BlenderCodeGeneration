@@ -246,7 +246,6 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
         essence of bounce through more apparent vertical motion.
     </pre>
 <div class="media-container">
-  <h3>Kinograph Critique Flow Chart</h3>
   <style>
     .media-container {
       display: flex;
@@ -254,9 +253,9 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
   </style>
   
   <div class="media-item" style="width: 50%;">
+    <h2> Kinograph Feedback Flowchart</h2>
     <figure>
       <img src="Flowchart.png" alt="Kinograph Critique Flow Chart">
-      <figcaption>Kinograph Critique Flow Chart</figcaption>
     </figure>
     <p>
       A kinograph is passed through to the LLM and critiqued against the original prompt, and this 
