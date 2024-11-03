@@ -120,7 +120,7 @@
             This template helps the LLM in initializing code during the first iteration. Having the first iteration 
             generate a proper animation ensures that successive iterations have a solid foundation to build upon. 
         </p>
-        <pre>
+        <pre><code>
 import bpy
 
 # Clear existing mesh objects
@@ -181,7 +181,7 @@ bpy.ops.nla.bake(frame_start=start_frame, frame_end=end_frame,
 bpy.context.scene.render.image_settings.file_format = 'FFMPEG'
 bpy.context.scene.render.ffmpeg.format = 'MPEG4'
 bpy.context.scene.render.ffmpeg.codec = 'H264'
-        </pre>
+        </code></pre>
         <p>
             Since including this template code, we have seen an improvement in the quality of the generated animations. 
             These animations are more closely aligned with the prompt, have a lower number of errors, 
@@ -236,11 +236,14 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
         #Set 1 refers to the penultimate iteration's kinograph
         ```Set 2```
 
-        The second set of images offers a clearer representation of a ball mid-bounce, 
-        showing its elevation above ground and then returning back to the surface, which 
-        suggests motion more effectively than the first set. In Set 2, there is a more dynamic depiction with visible changes in the ball’s height, 
-        supporting the theme of 'balls bouncing'. This set also shows the ball at different heights, which better visualizes the action of bouncing 
-        compared to the relatively static positioning in Set 1 where the ball seems to make smaller, less noticeable movements. Set 2 captures the 
+        The second set of images offers a clearer representation of a
+        ball mid-bounce, showing its elevation above ground and then 
+        returning back to the surface, which suggests motion more effectively
+        than the first set. In Set 2, there is a more dynamic depiction with 
+        visible changes in the ball’s height, supporting the theme of 'balls bouncing'. 
+        This set also shows the ball at different heights, which better visualizes the 
+        action of bouncing compared to the relatively static positioning in Set 1 where 
+        the ball seems to make smaller, less noticeable movements. Set 2 captures the 
         essence of bounce through more apparent vertical motion.
     </pre>
     <div class="media-container">
@@ -253,12 +256,15 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
         <div class="media-item">
             <h3>Kinograph Critique Flow Chart</h3>
             <p>
-                A kinograph is passed through to the LLM and critiqued against the original prompt, and this updated prompt is used to generate the next iteration's code.
-                This example depicts a bouncing ball kinograph and the process of how it is critiqued.
+                A kinograph is passed through to the LLM and critiqued against the original prompt, and this 
+                updated prompt is used to generate the next iteration's code.This example depicts a bouncing 
+                ball kinograph and the process of how it is critiqued.
             </p>
             <pre>
                 LLM Feedback on Animation:
-                To improve the animation and better fit the prompt, consider increasing the number of balls and introducing varied movement patterns and heights of the bounces to add more dynamism and interest to the animation.
+                To improve the animation and better fit the prompt, consider increasing the number of 
+                balls and introducing varied movement patterns and heights of the bounces to add more 
+                dynamism and interest to the animation.
             </pre>
         </div>
     </div>
