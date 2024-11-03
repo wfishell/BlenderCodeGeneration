@@ -80,6 +80,7 @@
 <body>
     <h1>Animation Generation Using Large Language Models</h1>
 <div style="text-align: center;">
+  <a href="ProjectPage.html" style="margin-right: 10px;">Animation Generation</a>    
   <a href="KinographicPipeline.html" style="margin-right: 10px;">Kinographic Pipeline</a>
   <a href="CodeTemplate.html">Initial Code Template</a>
 </div>
