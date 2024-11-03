@@ -148,23 +148,25 @@
         </div>
     </div>
 
-    <!-- Kinograph Flowchart Section -->
-    <div class="code-template-content">
-        <h2>LLM Decision</h2>
-        <p>
-            Through this iterative process, the LLM needs to make a choice as to whether the previous iteration's animation was an improvement on the animation before it. 
-            This decision prevents the LLM from regressing in quality over time, as we are constantly progressing the best performing animation and its associated code.
-        </p>
-        <div class="media-container">
-            <div class="media-item">
-                <h3>Kinograph Critique Flow Chart</h3>
-                <img src="Flowchart.png" alt="Kinograph Critique Flow Chart">
-                <p>
-                    A kinograph is passed through to the LLM and critiqued against the original prompt, and this updated prompt is used to generate the next iteration's code.
-                    This example depicts a bouncing ball kinograph and the process of how it is critiqued.
-                </p>
-            </div>
+<div class="code-template-content">
+    <h2>LLM Decision</h2>
+    <p>
+        Through this iterative process, the LLM needs to make a choice as to whether the previous iteration's animation was an improvement on the animation before it. 
+        This decision prevents the LLM from regressing in quality over time, as we are constantly progressing the best performing animation and its associated code.
+    </p>
+    <div class="media-container">
+        <!-- Image Item -->
+        <div class="media-item">
+            <img src="Flowchart.png" alt="Kinograph Critique Flow Chart">
+        </div>
+
+        <!-- Text Item -->
+        <div class="media-item">
+            <h3>Kinograph Critique Flow Chart</h3>
+            <p>
+                A kinograph is passed through to the LLM and critiqued against the original prompt, and this updated prompt is used to generate the next iteration's code.
+                This example depicts a bouncing ball kinograph and the process of how it is critiqued.
+            </p>
         </div>
     </div>
-</body>
-</html>
+</div>
