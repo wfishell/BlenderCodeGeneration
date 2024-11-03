@@ -247,7 +247,7 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
     </pre>
 <div class="media-container">
   <div class="media-item">
-    <img src="Flowchart.png" alt="Kinograph Critique Flow Chart" style="width: 100%;">
+    <img src="Flowchart.png" alt="Kinograph Critique Flow Chart" style="width: 150%;">
   </div>
 
   <div class="media-item">
