@@ -3,6 +3,11 @@
 <head>
     <title>Embed Videos Side by Side with Autoplay</title>
     <style>
+        /* General Styles */
+        h1, h2, h3 {
+            text-align: center;
+        }
+
         /* Video Container Styles */
         .video-container {
             display: flex;
@@ -19,10 +24,6 @@
             width: 100%; /* Video fills its container */
             height: auto; /* Maintains aspect ratio */
             display: block;
-        }
-
-        h1, h2, h3 {
-            text-align: center;
         }
 
         /* Responsive Video Item for Smaller Screens */
@@ -49,51 +50,12 @@
             text-align: justify;
         }
 
-        /* Code Template Section Styles */
-        .code-template {
-            display: flex;
-            align-items: flex-start; /* Align items at the top */
-            gap: 20px; /* Space between image and text */
-            margin-top: 40px;
-        }
-
-        .code-template img {
-            width: 100%; /* Make image fill the container */
-            max-width: 480px; /* Set max width to be similar to the video size */
-            height: auto; /* Maintain aspect ratio */
-            flex-shrink: 0; /* Prevent image from shrinking */
-        }
-
-        .code-template-content {
-            flex: 1; /* Allow text to take remaining space */
-        }
-
-        .code-template-content h2 {
-            text-align: left;
-            margin-bottom: 10px;
-        }
-
-        .code-template-content p,
-        .code-template-content pre {
-            font-size: 16px;
-            line-height: 1.6;
-            text-align: justify;
-        }
-
-        /* Style for Code Block */
-        pre {
-            background-color: #f4f4f4; /* Light background for readability */
-            padding: 10px;
-            border-radius: 5px;
-            overflow-x: auto; /* Handle long lines with horizontal scrolling */
-        }
-
         /* Media Container Styles */
         .media-container {
             display: flex;
-            flex-wrap: wrap;
             gap: 20px; /* Space between items */
             margin-top: 20px;
+            align-items: flex-start; /* Align items at the top */
         }
 
         .media-item {
@@ -106,6 +68,13 @@
             width: 100%; /* Media fills its container */
             height: auto; /* Maintains aspect ratio */
             display: block;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            .media-item {
+                flex: 1 1 100%; /* Items stack vertically on small screens */
+            }
         }
     </style>
 </head>
@@ -236,21 +205,26 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
         </ol>
         <h3>Kinograph Conversion</h3>
 
-        <!-- New Media Content -->
-        
+        <!-- Media Container for Video and Image -->
+        <div class="media-container">
+            <!-- Video Item with Title -->
             <div class="media-item">
+                <h2>Animation</h2>
                 <video controls loop autoplay muted>
                     <source src="PlanetaryOrbitAnimation_o1.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
-        <div class="media-container">
+
+            <!-- Image Item with Title -->
             <div class="media-item">
+                <h2>Kinograph</h2>
                 <img src="OrbitsKinographFinal.png" alt="Kinograph Image">
             </div>
         </div>
+
         <p>
-        The Animation is cut at every 20 frames to create a sequence of images which is fed into the LLM
+            The animation is cut every 20 frames to create a sequence of images, which is then fed into the LLM.
         </p>
     </div>
 </body>
