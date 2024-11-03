@@ -218,7 +218,7 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
 
             <!-- Image Item with Title -->
            <div class="media-item">
-        <h2>Kinograph</h2>
+        <h3>Kinograph</h3>
         <img src="OrbitsKinographFinal.png" alt="Kinograph Image">
         <!-- Move the text here so it appears directly under the image -->
         <p>
@@ -226,6 +226,21 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
             by which the LLM is able to critque the animation.
         </p>
     </div>
+    <h3>LLM Decision</h3>
+    <div class="media-item">
+        <h3>Kinograph Critque Flow Chart</h3>
+        <img src="Flowchart.png" alt="Kinograph Image">
+        <!-- Move the text here so it appears directly under the image -->
+        <p>
+            A kinograph is passed through to the LLM and critqued against the original prompt and this updated prompt is used to generate the next iteration's code.
+            This example depicts a bouncing ball kinograph and the process of how it is critiqued.
+        </p>
+    </div>
+    <p>
+        Through this iterative process, the LLM needs to make a choice as to whether the previous iteration's animation was an improvement on the animation before it. 
+        This decision prevents the LLM from regressing in quality over time, as we are constantly progressing the best performing animation and its associated code.
+    </p>
+
     </div>
 </body>
 </html>
