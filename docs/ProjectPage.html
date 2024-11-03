@@ -237,19 +237,20 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
         <h3>Kinograph Conversion</h3>
 
         <!-- New Media Content -->
-        <div class="media-container">
-            <div class="media-item">
-                <img src="OrbitsKinograph.jpg" alt="Kinograph Image">
-            </div>
+        
             <div class="media-item">
                 <video controls loop autoplay muted>
-                    <source src="Orbits01Video.mp4" type="video/mp4">
+                    <source src="PlanetaryOrbitAnimation_o1.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
+        <div class="media-container">
+            <div class="media-item">
+                <img src="OrbitsKinographUpdated.jpg" alt="Kinograph Image">
+            </div>
         </div>
         <p>
-            The kinograph is a series of frames extracted from the animation, combined into a single image. This provides a visual summary of the animation's content, which the LLM can analyze to provide feedback. The side-by-side comparison of the kinograph and the original animation helps illustrate the differences and improvements made through each iteration.
+        The Animation is cut at every 20 frames to create a sequence of images which is fed into the LLM
         </p>
     </div>
 </body>
