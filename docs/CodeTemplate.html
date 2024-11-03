@@ -1,22 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- Project Overview Section -->
-    <div class="section">
-        <h2>Project Overview</h2>
-        <p>
-            We are using large language models to generate animations in Blender by prompting the LLM to generate code 
-            which is used to create the animation. We have developed an iterative pipeline that generates an animation, 
-            then passes the finished product back into the LLM. The LLM critiques the animation based on how accurately 
-            it represents the inputted prompt and then provides an updated prompt along with the generated code for the 
-            next iteration of animation. This process offers clear insights into how LLMs can critique their own work 
-            and use that information to improve. It also provides interesting results in how LLMs transition from a prompt 
-            to the 3D space, showcasing their ability to handle the complexity of spatial and temporal reasoning in 3D environments.
-        </p>
-    </div>
     <!-- Code Template Section -->
     <div class="code-template-content">
-        <h2>Initial Code Template</h2>
+        <h1>Initial Code Template</h1>
         <p>
             This initial code template that is fed into the LLM creates an object, camera, and light source. 
             This template helps the LLM in initializing code during the first iteration. Having the first iteration 
