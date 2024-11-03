@@ -114,4 +114,3 @@
             to the 3D space, showcasing their ability to handle the complexity of spatial and temporal reasoning in 3D environments.
         </p>
     </div>
-</div>
