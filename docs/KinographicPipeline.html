@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
- <!-- Kinographic Conversion Section -->
-    <div class="Kinographic Feedback Loop">
+    <title>Kinographic Feedback Loop</title>
+</head>
+<body>
+    <!-- Kinographic Conversion Section -->
+    <div class="kinographic-feedback-loop">
         <h1>Kinographic Conversion</h1>
         <p>
             Many LLMs are not able to take in an mp4 video as an input, so we have created a feedback loop that inputs a kinograph. This 
@@ -36,48 +39,51 @@
         </div>
     </div>
 
-<div class="LLM Decision">
-    <h2>LLM Decision</h2>
-    <p>
-        Through this iterative process, the LLM needs to make a choice as to whether the previous iteration's animation was an improvement on the animation before it. 
-        This decision prevents the LLM from regressing in quality over time, as we are constantly progressing the best performing animation and its associated code.
-    </p>
-    <pre>
-        LLM Decision on the two previous iterations:
-        #Set 2 refers to the the previous iteration's kinograph
-        #Set 1 refers to the penultimate iteration's kinograph
-        ```Set 2```
+    <!-- LLM Decision Section -->
+    <div class="llm-decision">
+        <h2>LLM Decision</h2>
+        <p>
+            Through this iterative process, the LLM needs to make a choice as to whether the previous iteration's animation was an improvement on the animation before it. 
+            This decision prevents the LLM from regressing in quality over time, as we are constantly progressing the best performing animation and its associated code.
+        </p>
+        <pre>
+LLM Decision on the two previous iterations:
+#Set 2 refers to the the previous iteration's kinograph
+#Set 1 refers to the penultimate iteration's kinograph
+Set 2
 
-        The second set of images offers a clearer representation of a
-        ball mid-bounce, showing its elevation above ground and then 
-        returning back to the surface, which suggests motion more effectively
-        than the first set. In Set 2, there is a more dynamic depiction with 
-        visible changes in the ball’s height, supporting the theme of 'balls bouncing'. 
-        This set also shows the ball at different heights, which better visualizes the 
-        action of bouncing compared to the relatively static positioning in Set 1 where 
-        the ball seems to make smaller, less noticeable movements. Set 2 captures the 
-        essence of bounce through more apparent vertical motion.
-    </pre>
-    <div class="media-container">
-        <!-- Image Item -->
-        <div class="media-item">
-            <img src="Flowchart.png" alt="Kinograph Critique Flow Chart">
-        </div>
+The second set of images offers a clearer representation of a
+ball mid-bounce, showing its elevation above ground and then 
+returning back to the surface, which suggests motion more effectively
+than the first set. In Set 2, there is a more dynamic depiction with 
+visible changes in the ball’s height, supporting the theme of 'balls bouncing'. 
+This set also shows the ball at different heights, which better visualizes the 
+action of bouncing compared to the relatively static positioning in Set 1 where 
+the ball seems to make smaller, less noticeable movements. Set 2 captures the 
+essence of bounce through more apparent vertical motion.
+        </pre>
+        <div class="media-container">
+            <!-- Image Item -->
+            <div class="media-item">
+                <img src="Flowchart.png" alt="Kinograph Critique Flow Chart">
+            </div>
 
-        <!-- Text Item -->
-        <div class="media-item">
-            <h3>Kinograph Critique Flow Chart</h3>
-            <p>
-                A kinograph is passed through to the LLM and critiqued against the original prompt, and this 
-                updated prompt is used to generate the next iteration's code.This example depicts a bouncing 
-                ball kinograph and the process of how it is critiqued.
-            </p>
-            <pre>
-                LLM Feedback on Animation:
-                To improve the animation and better fit the prompt, consider increasing the number of 
-                balls and introducing varied movement patterns and heights of the bounces to add more 
-                dynamism and interest to the animation.
-            </pre>
+            <!-- Text Item -->
+            <div class="media-item">
+                <h3>Kinograph Critique Flow Chart</h3>
+                <p>
+                    A kinograph is passed through to the LLM and critiqued against the original prompt, and this 
+                    updated prompt is used to generate the next iteration's code. This example depicts a bouncing 
+                    ball kinograph and the process of how it is critiqued.
+                </p>
+                <pre>
+LLM Feedback on Animation:
+To improve the animation and better fit the prompt, consider increasing the number of 
+balls and introducing varied movement patterns and heights of the bounces to add more 
+dynamism and interest to the animation.
+                </pre>
+            </div>
         </div>
     </div>
-</div>
+</body>
+</html>
