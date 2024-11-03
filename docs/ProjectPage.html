@@ -125,8 +125,6 @@
     </div>
 
     <!-- Code Template Section -->
-    <div class="code-template">
-        <img src="AnimationGenerationCodeTemplate.png" alt="Initial Code Template">
         <div class="code-template-content">
             <h2>Initial Code Template</h2>
             <p>
@@ -135,17 +133,66 @@
                 generate a proper animation ensures that successive iterations have a solid foundation to build upon. 
             </p>
             <pre>
-# Sample code for the initial template
-object = bpy.data.objects.new("Object", None)
-camera = bpy.data.objects.new("Camera", bpy.data.cameras.new("Camera"))
-light = bpy.data.objects.new("Light", bpy.data.lights.new("Light", type='POINT'))
+import bpy
 
-# Position the camera
-camera.location = (5, -5, 5)
-camera.rotation_euler = (1.109, 0, 0.785)
+# Clear existing mesh objects
+bpy.ops.object.select_all(action='DESELECT')
+bpy.ops.object.select_by_type(type='MESH')
+bpy.ops.object.delete()
 
-# Add the light source
-light.location = (2, 2, 10)
+# Create a new cube
+bpy.ops.mesh.primitive_cube_add(size=1, location=(0, 0, 0))
+cube = bpy.context.object
+
+# Add a point light
+bpy.ops.object.light_add(type='POINT', location=(0, 0, 5))
+light = bpy.context.object
+light.data.energy = 1000  # Set the light strength
+
+# Set the number of frames for the animation
+start_frame = 1
+end_frame = 200
+bpy.context.scene.frame_start = start_frame
+bpy.context.scene.frame_end = end_frame
+
+# Insert keyframes for the cube's location
+cube.location.x = -5  # Starting position
+cube.keyframe_insert(data_path="location", frame=start_frame)
+
+cube.location.x = 5  # Ending position
+cube.keyframe_insert(data_path="location", frame=end_frame)
+
+# Insert keyframes for the camera's location
+camera = bpy.data.cameras.new("Camera")
+camera_object = bpy.data.objects.new("Camera", camera)
+bpy.context.scene.collection.objects.link(camera_object)
+bpy.context.scene.camera = camera_object
+
+# Set the camera's initial position
+camera_object.location = (-5, -10, 5)
+camera_object.rotation_euler = (1.1, 0, 0)  # Point down at the cube
+
+# Insert keyframes for the camera's location
+camera_object.keyframe_insert(data_path="location", frame=start_frame)
+camera_object.location.x = 5  # Move camera with the cube
+camera_object.keyframe_insert(data_path="location", frame=end_frame)
+
+# Ensure all objects are baked for animation
+bpy.context.view_layer.objects.active = cube
+bpy.ops.nla.bake(frame_start=start_frame, frame_end=end_frame, 
+                 visual_keying=True, clear_constraints=True, 
+                 bake_types={'POSE', 'OBJECT'})
+
+bpy.context.view_layer.objects.active = camera_object
+bpy.ops.nla.bake(frame_start=start_frame, frame_end=end_frame, 
+                 visual_keying=True, clear_constraints=True, 
+                 bake_types={'POSE', 'OBJECT'})
+
+# Set render output settings
+
+bpy.context.scene.render.image_settings.file_format = 'FFMPEG'
+bpy.context.scene.render.ffmpeg.format = 'MPEG4'
+bpy.context.scene.render.ffmpeg.codec = 'H264'
             </pre>
             <p>
                 Since including this template code, we have seen an improvement in the quality of the generated animations. 
