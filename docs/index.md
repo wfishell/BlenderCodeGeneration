@@ -79,7 +79,7 @@
 </head>
 <body>
     <h1>Animation Generation Using Large Language Models</h1>
-
+<a href="KinographicPipeline.html">Link 1</a> <a href="CodeTemplate.html">Link 2
     <div class="video-container">
         <div class="video-item">
             <h2>Quilt Falling</h2>
