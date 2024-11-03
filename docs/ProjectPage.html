@@ -3,6 +3,7 @@
 <head>
     <title>Embed Videos Side by Side with Autoplay</title>
     <style>
+        /* Video Container Styles */
         .video-container {
             display: flex;
             flex-wrap: wrap;
@@ -24,14 +25,14 @@
             text-align: center;
         }
 
-        /* Optional: Adjust video item for smaller screens */
+        /* Responsive Video Item for Smaller Screens */
         @media (max-width: 600px) {
             .video-item {
                 flex: 1 1 100%; /* Videos stack vertically on small screens */
             }
         }
 
-        /* Styles for the Overview and Additional Information sections */
+        /* Project Overview Section Styles */
         .section {
             margin-top: 40px;
             padding: 10px;
@@ -43,6 +44,28 @@
         }
 
         .section p {
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        /* Code Template Section Styles */
+        .code-template {
+            display: flex;
+            align-items: flex-start; /* Align items at the top */
+            gap: 20px; /* Space between image and text */
+            margin-top: 40px;
+        }
+
+        .code-template img {
+            width: 100%; /* Make image fill the container */
+            max-width: 480px; /* Set max width to be similar to the video size */
+            height: auto; /* Maintain aspect ratio */
+            flex-shrink: 0; /* Prevent image from shrinking */
+        }
+
+        .code-template p {
+            flex: 1; /* Allow text to take remaining space */
             font-size: 16px;
             line-height: 1.6;
             text-align: justify;
@@ -84,33 +107,22 @@
         </p>
     </div>
 
-    <!-- Additional Information Section -->
-    <head>
-        <style>
-            .section {
-                display: flex;
-                align-items: center;
-            }
-            .section img {
-                margin-right: 10px; /* Adjust the spacing between the image and the text */
-            }
-        </style>
-    </head>
-    <body>
-        <div class="section">
-            <img src="AnimationGenerationCodeTemplate.png" alt="Initial Code Template" width="100" height="100">
-            <p>
-                This initial code template that is fed into the LLM creates an object, camera and light source. 
-                This template helps the LLM in initializing code during the first iteration. Having the first iteration 
-                generate a proper animation ensures that succesive iterations have a solid foundation to build upon. 
+    <!-- Code Template Section -->
+    <div class="code-template">
+        <img src="AnimationGenerationCodeTemplate.png" alt="Initial Code Template">
+        <p>
+            This initial code template that is fed into the LLM creates an object, camera, and light source. 
+            This template helps the LLM in initializing code during the first iteration. Having the first iteration 
+            generate a proper animation ensures that successive iterations have a solid foundation to build upon. 
 
-                Prior to including the template code, the LLM was generating animations that didn't have movement, or contained no
-                light source, or placed the camera so that it captured none of th animation. This makes it much more difficult for the LLM to generate an
-                animation that matches the prompt.
+            Prior to including the template code, the LLM was generating animations that didn't have movement, 
+            or contained no light source, or placed the camera so that it captured none of the animation. 
+            This made it much more difficult for the LLM to generate an animation that matches the prompt.
 
-                Since including this template code, we have seen an improvement in the quality of the generated animations. These animations are more closely
-                aligned with the prompt, have a lower number of errors, and enable us to to have a standard starting point for each animation which makes results more replicable.
-            </p>
-        </div>
-    </body>
+            Since including this template code, we have seen an improvement in the quality of the generated animations. 
+            These animations are more closely aligned with the prompt, have a lower number of errors, 
+            and enable us to have a standard starting point for each animation, making the results more replicable.
+        </p>
+    </div>
+</body>
 </html>
