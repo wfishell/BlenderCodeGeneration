@@ -115,6 +115,6 @@
         </p>
     <div class="media-item">
         <h2>Animation Generation Pipeline</h2>
-        <img src="AnimationGenerationCodeTemplate.png" alt="Animation Generation Code Template">
+        <img src="AnimationGenerationProcess.png" alt="Animation Generation Code Template">
     </div>
     </div>
