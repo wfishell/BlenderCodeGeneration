@@ -247,25 +247,26 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
         essence of bounce through more apparent vertical motion.
     </pre>
     <div class="media-container">
-        <!-- Image Item -->
-        <div class="media-item">
-            <img src="Flowchart.png" alt="Kinograph Critique Flow Chart">
-        </div>
+    <!-- Image Item -->
+    <div class="media-item">
+        <img src="Flowchart.png" alt="Kinograph Critique Flow Chart">
+    </div>
 
-        <!-- Text Item -->
-        <div class="media-item">
-            <h3>Kinograph Critique Flow Chart</h3>
-            <p>
-                A kinograph is passed through to the LLM and critiqued against the original prompt, and this 
-                updated prompt is used to generate the next iteration's code.This example depicts a bouncing 
-                ball kinograph and the process of how it is critiqued.
-            </p>
-            <pre>
-                LLM Feedback on Animation:
-                To improve the animation and better fit the prompt, consider increasing the number of 
-                balls and introducing varied movement patterns and heights of the bounces to add more 
-                dynamism and interest to the animation.
-            </pre>
-        </div>
+    <!-- Text Item -->
+    <div class="media-item">
+        <h3>Kinograph Critique Flow Chart</h3>
+        <p>
+            A kinograph is passed through to the LLM and critiqued against the original prompt, and this 
+            updated prompt is used to generate the next iteration's code. This example depicts a bouncing 
+            ball kinograph and the process of how it is critiqued.
+        </p>
+        <pre>
+LLM Feedback on Animation:
+To improve the animation and better fit the prompt, consider increasing the number of 
+balls and introducing varied movement patterns and heights of the bounces to add more 
+dynamism and interest to the animation.
+        </pre>
+    </div>
+</div>
     </div>
 </div>
