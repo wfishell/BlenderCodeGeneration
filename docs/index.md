@@ -106,7 +106,7 @@
         <div class="video-item">
             <h2>Quilt Falling</h2>
             <video controls loop autoplay muted>
-                <source src="QuiltFalling01Video.mp4" type="video/mp4">
+                <source src="QuiltFallingImprovedQuality.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
