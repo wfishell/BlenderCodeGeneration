@@ -17,12 +17,24 @@
         .video-item {
             flex: 1 1 calc(50% - 20px); /* Each video item takes up 50% minus the gap */
             box-sizing: border-box;
+            position: relative; /* Added for aspect ratio control */
+            overflow: hidden;   /* Added to contain the video */
+        }
+
+        /* Enforce consistent aspect ratio */
+        .video-item::before {
+            content: '';
+            display: block;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
         }
 
         .video-item video {
+            position: absolute; /* Position the video absolutely within the container */
+            top: 0;
+            left: 0;
             width: 100%; /* Video fills its container */
-            height: auto; /* Maintains aspect ratio */
-            display: block;
+            height: 100%; /* Ensures the video matches the container's height */
+            object-fit: cover; /* Maintains aspect ratio and fills container */
         }
 
         /* Responsive Video Item for Smaller Screens */
@@ -136,6 +148,7 @@
             <li>Create me a python script for an object driving through a wall</li>
             <li>Create me a python script for a blender animation of a Planets orbitting around the Sun</li>
         </p>
+    </div>
     <div class="media-item">
         <h2>Animation Generation Pipeline Issues</h2>
         <img src="AnimationGenerationProcess.png" alt="Animation Generation Code Template">
@@ -179,20 +192,21 @@
         </div>
     </div>
     <div class="media-item">
-    <!-- Analysis Section -->
-    <h2>Analysis</h2>
-    <p>
-     This is a simple animation of balls bouncing. The LLM makes key decisions about the speed of how the ball bounces, 
-     how it is distorted by the ground, and the complexity of the overall animation which create more realism. While there 
-     is still much to be desired from this animation, there is a clear changes in each succesive animation which can be tied back to
-     the feedback provided at each instance.
-    </p>
-    <div class="section">
-           <h2>Issues</h2>
+        <!-- Analysis Section -->
+        <h2>Analysis</h2>
         <p>
-        While this process had has success there remain a few key issues with this framework that are creating difficulties         with increasing the complexity in the animations generated:
-        <li>There is randomness in the LLM's outputs which can cause variance in the output without any changes to   the underlying code on our part. This is exemplified in instances of generating animations of orbits which vary vary in from highly detailed animations to black screens because the camera was not initialized properly. Currently we are looking to see if there is a way to create a seed to have more control over the LLMs output.</li>
-        <li>The LLM often references functions and objects that don't exist. This causes errors which are fixed by recursively calling the function and passing in the failed code with the error to see if the LLM can fix itself. As the complexity of the prompt increases, the more the LLM tries to reference these nonexistant objects. We have specified a max recursive depth to prevent endless queries to the LLM, but are still trying to figure out how to reduce these errors for more complex animations</li> 
+            This is a simple animation of balls bouncing. The LLM makes key decisions about the speed of how the ball bounces, 
+            how it is distorted by the ground, and the complexity of the overall animation which create more realism. While there 
+            is still much to be desired from this animation, there is a clear changes in each succesive animation which can be tied back to
+            the feedback provided at each instance.
+        </p>
+    </div>
+    <div class="section">
+        <h2>Issues</h2>
+        <p>
+            While this process has had success, there remain a few key issues with this framework that are creating difficulties with increasing the complexity in the animations generated:
+            <li>There is randomness in the LLM's outputs which can cause variance in the output without any changes to the underlying code on our part. This is exemplified in instances of generating animations of orbits which vary from highly detailed animations to black screens because the camera was not initialized properly. Currently, we are looking to see if there is a way to create a seed to have more control over the LLM's output.</li>
+            <li>The LLM often references functions and objects that don't exist. This causes errors which are fixed by recursively calling the function and passing in the failed code with the error to see if the LLM can fix itself. As the complexity of the prompt increases, the more the LLM tries to reference these nonexistent objects. We have specified a max recursive depth to prevent endless queries to the LLM but are still trying to figure out how to reduce these errors for more complex animations.</li>
         </p>
     </div>
 
