@@ -110,6 +110,9 @@
 </head>
 <body>
     <h1>Animation Generation Using Large Language Models</h1>
+     <div style="text-align: left; font-size: 18px; margin-bottom: 20px;">
+        <strong>Authors:</strong> William Fishell, Professor Mark Santolucito
+    </div>
     <div style="text-align: center;">
         <a href="https://github.com/wfishell/BlenderCodeGeneration" style="margin-right: 10px;">Github Repo</a>
         <a href="KinographicPipeline.html" style="margin-right: 10px;">Kinographic Pipeline</a>
