@@ -99,7 +99,7 @@
 <body>
     <h1>Animation Generation Using Large Language Models</h1>
 <div style="text-align: center;">
-  <a href="ProjectPage.html" style="margin-right: 10px;">Animation Generation</a>    
+  <a href="https://github.com/wfishell/BlenderCodeGeneration" style="margin-right: 10px;">Github Repo/a>    
   <a href="KinographicPipeline.html" style="margin-right: 10px;">Kinographic Pipeline</a>
   <a href="CodeTemplate.html">Initial Code Template</a>
 </div>
@@ -197,5 +197,4 @@
         <li>The LLM often references functions and objects that don't exist. This causes errors which are fixed by                     recursively calling the function and passing in the failed code with the error to see if the LLM can fix itself.             As the complexity of the prompt increases, the more the LLM tries to reference these nonexistant objects. We                have specified a max recursive depth to prevent endless queries to the LLM, but are still trying to figure out             how to reduce these errors for more complex animations</li> 
         </p>
     </div>
-</body>
-</html>
+
