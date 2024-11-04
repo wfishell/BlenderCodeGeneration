@@ -116,12 +116,59 @@
             <li>Create me a python script for a blender animation of a ball bouncing</li>
             <li>Create me a python script for a blender animation of a quilt falling onto a sphere"</li>
             <li>Create me a python script for an object driving through a wall</li>
-            <li>Create me a python script for an object driving through a wall</li>
             <li>Create me a python script for a blender animation of a Planets orbitting around the Sun</li>
         </p>
     <div class="media-item">
         <h2>Animation Generation Pipeline Issues</h2>
         <img src="AnimationGenerationProcess.png" alt="Animation Generation Code Template">
+    </div>
+    <h1>Animation of Bouncing Balls Over Time</h1>
+    <div class="video-container">
+        <div class="video-item">
+            <h3>Bouncing Balls Animation After 1 Iterations</h3>
+            <video autoplay loop muted>
+                <source src="BouncingBalls/BouncingBallso10.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="video-item">
+            <h3>Bouncing Balls Animation After 2 Iterations</h3>
+            <video autoplay loop muted>
+                <source src="BouncingBalls/BouncingBallso11.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="video-item">
+            <h3>Bouncing Balls Animation After 3 Iterations</h3>
+            <video autoplay loop muted>
+                <source src="BouncingBalls/BouncingBallso12.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="video-item">
+            <h3>Bouncing Balls Animation After 4 Iterations</h3>
+            <video autoplay loop muted>
+                <source src="BouncingBalls/BouncingBallso13.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="video-item">
+            <h3>Bouncing Balls Animation After 5 Iterations</h3>
+            <video autoplay loop muted>
+                <source src="BouncingBalls/BouncingBallso14.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+    <div class="media-item">
+    <!-- Analysis Section -->
+    <h2>Analysis</h2>
+    <p>
+     This is a simple animation of balls bouncing. The LLM makes key decisions about the speed of how the ball bounces, 
+     how it is distorted by the ground, and the complexity of the overall animation which create more realism. While there 
+     is still much to be desired from this animation, there is a clear changes in each succesive animation which can be tied back to
+     the feedback provided at each instance.
+    </p>
     <div class="section">
            <h2>Issues</h2>
         <p>
