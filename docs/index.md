@@ -27,7 +27,7 @@
 
         /* Responsive Video Item for Smaller Screens */
         @media (max-width: 600px) {
-            .video-item, .media-item {
+            .video-item {
                 flex: 1 1 100%; /* Items stack vertically on small screens */
             }
         }
@@ -98,10 +98,11 @@
 </head>
 <body>
     <h1>Animation Generation Using Large Language Models</h1>
-<div style="text-align: center;">
-  <a href="https://github.com/wfishell/BlenderCodeGeneration" style="margin-right: 10px;">Github Repo</a>    
-  <a href="KinographicPipeline.html" style="margin-right: 10px;">Kinographic Pipeline</a>
-  <a href="CodeTemplate.html">Initial Code Template</a>
+    <div style="text-align: center;">
+        <a href="https://github.com/wfishell/BlenderCodeGeneration" style="margin-right: 10px;">Github Repo</a>
+        <a href="KinographicPipeline.html" style="margin-right: 10px;">Kinographic Pipeline</a>
+        <a href="CodeTemplate.html">Initial Code Template</a>
+    </div>
     <div class="video-container">
         <div class="video-item">
             <h2>Quilt Falling</h2>
@@ -110,7 +111,6 @@
                 Your browser does not support the video tag.
             </video>
         </div>
-
         <div class="video-item">
             <h2>Orbits</h2>
             <video controls loop autoplay muted>
