@@ -75,6 +75,25 @@
                 flex: 1 1 100%; /* Items stack vertically on small screens */
             }
         }
+
+        /* Bouncing Balls Video Container Styles */
+        .video-container.bouncing-balls {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px; /* Adjust gap as needed */
+        }
+
+        @media (max-width: 800px) {
+            .video-container.bouncing-balls {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+            }
+        }
+
+        @media (max-width: 600px) {
+            .video-container.bouncing-balls {
+                grid-template-columns: 1fr; /* Stack items vertically on small screens */
+            }
+        }
     </style>
 </head>
 <body>
@@ -123,7 +142,7 @@
         <img src="AnimationGenerationProcess.png" alt="Animation Generation Code Template">
     </div>
     <h1>Animation of Bouncing Balls Over Time</h1>
-    <div class="video-container">
+    <div class="video-container bouncing-balls">
         <div class="video-item">
             <h3>Bouncing Balls Animation After 1 Iterations</h3>
             <video autoplay loop muted>
@@ -178,3 +197,5 @@
         <li>The LLM often references functions and objects that don't exist. This causes errors which are fixed by                     recursively calling the function and passing in the failed code with the error to see if the LLM can fix itself.             As the complexity of the prompt increases, the more the LLM tries to reference these nonexistant objects. We                have specified a max recursive depth to prevent endless queries to the LLM, but are still trying to figure out             how to reduce these errors for more complex animations</li> 
         </p>
     </div>
+</body>
+</html>
