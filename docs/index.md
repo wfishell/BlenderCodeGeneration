@@ -131,7 +131,7 @@
             it represents the inputted prompt and then provides an updated prompt along with the generated code for the 
             next iteration of animation. This process offers clear insights into how LLMs can critique their own work 
             and use that information to improve. It also provides interesting results in how LLMs transition from a prompt 
-            to the 3D space, showcasing their ability to handle the complexity of spatial and temporal reasoning in 3D environments.We are using 4 templates to test the effectivesness of our pipeline:
+            to the 3D space, showcasing their ability to handle the complexity of spatial and temporal reasoning in 3D environments. Note that we render these animations at 256p X 256p to reduce the run time of rendering, but this process also outputs the blender file enabeling a user to render at a higher resolution if desired. We are using 4 templates to test the effectivesness of our pipeline:
             <li>Create me a python script for a blender animation of a ball bouncing</li>
             <li>Create me a python script for a blender animation of a quilt falling onto a sphere"</li>
             <li>Create me a python script for an object driving through a wall</li>
