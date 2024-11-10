@@ -1,4 +1,3 @@
-#%%
 from Iterator import *
 from Packages import *
 from collections import defaultdict
@@ -64,12 +63,13 @@ class Folder_Analysis:
         sns.barplot(x='ErrorMessage', y='Frequency', data=Error_DF)
         max_label_width = 20  # Set the maximum width for each line
         labels = [textwrap.fill(label, max_label_width) for label in Error_DF['ErrorMessage']]
-        plt.xticks(range(len(labels)), labels, rotation=90, ha='right')
+        plt.xticks(range(len(labels)), labels, rotation=90, ha='right',fontsize=8)
         plt.title(f'{Prompt} Errors')
         plt.xlabel('Error Messages')
         plt.ylabel('Frequency')
         plt.tight_layout()
-        plt.show()
+        plt.savefig(f'./docs/{Prompt}_{datetime.today().date()}_ErrorPlot.png', format="png", dpi=300, bbox_inches="tight")
+        plt.close()
     def PlotWarningRates(self,Prompt):
         Warning_DF, Error_DF=self.FileAnalysis()
         sns.barplot(x='WarningMessage', y='Frequency', data=Warning_DF)
@@ -81,7 +81,8 @@ class Folder_Analysis:
         plt.xlabel('Warning Messages')
         plt.ylabel('Frequency')
         plt.tight_layout()
-        plt.show()
+        plt.savefig(f'./docs/{Prompt}_{datetime.today().date()}_WarningPlot.png', format="png", dpi=300, bbox_inches="tight")
+        plt.close()
     def QueryRunTimeAvgs(self,Prompt):
         Dict_LIST=[]
         for ele in self.subfolder_ids:
@@ -98,8 +99,8 @@ class Folder_Analysis:
         plt.title(f'{Prompt} Average LLM Query Time')
         plt.xlabel('Instance')
         plt.ylabel('Average Query Time')
-        plt.show()
-        
+        plt.savefig(f'./docs/{Prompt}_{datetime.today().date()}_QueryTimePlot.png', format="png", dpi=300, bbox_inches="tight")
+        plt.close()
 class individual_file_analysis:
     def __init__(self,FolderID):
         self.JsonFileTypes=['Code','Prompt','elapsed_time','gpt_query_time_0','gpt_query_time_1',
@@ -252,13 +253,19 @@ class BlenderCodeAnalyzer:
 Folder=Folder_Analysis('1B_8X6zNoSybJIlKCodb3cAKph3J0FGwH')
 Folder.QueryRunTimeAvgs('Bouncing Balls')
 
-#%%
 
 if __name__=='__main__':
     Animation_Tests={'BouncingBalls':'1B_8X6zNoSybJIlKCodb3cAKph3J0FGwH',
                     'PlanetOrbitting':'1BTzPw7dXIbzUKxXyyWxcrwu8NWW_QcpW',
                     'QuiltFalling':'1MBPff_u8VDaGpyOj7XAudMvNydeVdn6w',
                     'DriveThroughWall':'1HL4x82wwIt2AAS19HbqlDeJnbPt7fRV4'}
+    
     for key in Animation_Tests:
         Folder=Folder_Analysis(Animation_Tests[key])
         Warning_DF, Error_DF=Folder.FileAnalysis()
+        Error_DF.to_csv(f'./docs/{key}_{datetime.today().date()}_ErrorFrequency.csv')
+        Warning_DF.to_csv(f'./docs/{key}_{datetime.today().date()}_WarningFrequency.csv')
+        Folder.PlotErrorRates(key)
+        Folder.QueryRunTimeAvgs(key)
+
+
