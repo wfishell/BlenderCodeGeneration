@@ -1,0 +1,3 @@
+,ErrorMessage,Frequency
+0,'FollowPathConstraint' object has no attribute 'animation_data',1
+1,"'bpy_prop_collection[key]: key ""World"" not found'",3
