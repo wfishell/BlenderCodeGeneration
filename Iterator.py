@@ -1,3 +1,4 @@
+
 from Packages import *
 # If modifying these SCOPES, delete the token.pickle file.
 SCOPES = ['https://www.googleapis.com/auth/drive.file']
@@ -211,59 +212,64 @@ class LLMAnalysis:
         return matches
     def CompareKinographs(self):
         # Create the messages for the API call
-        messages = [
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "text",
-                        "text": f"I have two sets of images functioning as kineographs for this prompt: {self.prompt}."
-                                f"which one is performing better at representing the prompt and why. Consider the images"
-                                f"come in order in their respective sets (return name of better set surounded by ``` ``` as well as your analysis"
+        try:
+            messages = [
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": f"I have two sets of images functioning as kineographs for this prompt: {self.prompt}."
+                                    f"which one is performing better at representing the prompt and why. Consider the images"
+                                    f"come in order in their respective sets (return name of better set surounded by 3 backticks  on each side``` ```"
+                                    f"as well as your analysis"
+                        }
+                    ]
+                }
+            ]
+
+            # Adding images from set_1
+            for base64_image in [self.set_1[i] for i in [0, 2, 4]]:
+                messages[0]['content'].append({
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/jpeg;base64,{base64_image}"
                     }
-                ]
-            }
-        ]
+                })
 
-        # Adding images from set_1
-        for base64_image in self.set_1:
-            messages[0]['content'].append({
-                "type": "image_url",
-                "image_url": {
-                    "url": f"data:image/jpeg;base64,{base64_image}"
-                }
-            })
+            # Adding images from set_2
+            for base64_image in [self.set_2[i] for i in [0, 2, 4]]:
+                messages[0]['content'].append({
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/jpeg;base64,{base64_image}"
+                    }
+                })
 
-        # Adding images from set_2
-        for base64_image in self.set_2:
-            messages[0]['content'].append({
-                "type": "image_url",
-                "image_url": {
-                    "url": f"data:image/jpeg;base64,{base64_image}"
-                }
-            })
+            # Make the API call
+            response = openai.ChatCompletion.create(
+                model="gpt-4-turbo",
+                messages=messages,
+                max_tokens=1000,
+            )
 
-        # Make the API call
-        response = openai.ChatCompletion.create(
-            model="gpt-4-turbo",
-            messages=messages,
-            max_tokens=1000,
-        )
-
-        # Extract the response content
-        response_content = response['choices'][0]['message']['content']
-        print(response_content)
-        analysis_file = 'Evaluation.txt'
-        with open(analysis_file, "w") as file:
-            # Write some text to the file
-            file.write(response_content)
-        fileupload = UploadFile('Evaluation.txt')
-        prefered_set=str(self.extract_backticks_code(response_content)[0])
-        if prefered_set.find('2') != -1 or prefered_set.find('second') != -1:
-            fileupload.upload_file_to_drive(fileupload.filename, fileupload.filename, "text/plain", self.FolderID_2)
-        elif prefered_set.find('1') != -1 or prefered_set.find('first') != -1:
-            fileupload.upload_file_to_drive(fileupload.filename, fileupload.filename, "text/plain", self.FolderID_1)
-        return self.extract_backticks_code(response_content)[0]
+            # Extract the response content
+            response_content = response['choices'][0]['message']['content']
+            print(response_content)
+            analysis_file = 'Evaluation.txt'
+            with open(analysis_file, "w") as file:
+                # Write some text to the file
+                file.write(response_content)
+            fileupload = UploadFile('Evaluation.txt')
+            prefered_set=str(self.extract_backticks_code(response_content)[0])
+            if prefered_set.find('2') != -1 or prefered_set.find('second') != -1:
+                fileupload.upload_file_to_drive(fileupload.filename, fileupload.filename, "text/plain", self.FolderID_2)
+            elif prefered_set.find('1') != -1 or prefered_set.find('first') != -1:
+                fileupload.upload_file_to_drive(fileupload.filename, fileupload.filename, "text/plain", self.FolderID_1)
+            return self.extract_backticks_code(response_content)[0]
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return 'Set 2'
     def ProvideFeedback(self,preferred_set):
         if preferred_set.find('2') != -1 or preferred_set.find('second') != -1:
             preferred_set_photos=self.set_2
@@ -271,58 +277,76 @@ class LLMAnalysis:
             preferred_set_photos=self.set_1
         else:
             self.CompareKinographs()
-        messages = [
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "text",
-                        "text": f"provide 1 sentences of feedback on this kinograph on what can be addressed to improve the animation to better fit the prompt: {self.prompt}."
-                                f"Do not provide any code just constructive feeback"
-                    }
-                ]
-            }
-        ]
-
-        # Adding images from set_1
-        for base64_image in preferred_set_photos:
-            messages[0]['content'].append({
-                "type": "image_url",
-                "image_url": {
-                    "url": f"data:image/jpeg;base64,{base64_image}"
+        try:
+            messages = [
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": f"provide 1 sentences of feedback on this kinograph on what can be addressed to improve the animation to better fit the prompt: {self.prompt}."
+                                    f"Do not provide any code just constructive feeback"
+                        }
+                    ]
                 }
-            })
+            ]
 
-        # Make the API call
-        response = openai.ChatCompletion.create(
-            model="gpt-4-turbo",
-            messages=messages,
-            max_tokens=1000,
-        )
+            # Adding images from set_1
+            for base64_image in [preferred_set_photos[i] for i in [0, 2, 4]]:
+                messages[0]['content'].append({
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/jpeg;base64,{base64_image}"
+                    }
+                })
 
-        # Extract the response content
-        response_content = response['choices'][0]['message']['content']
-        print(response_content)
-        analysis_file = 'ImprovementPlan.txt'
-        with open(analysis_file, "w") as file:
-            # Write some text to the file
-            file.write(response_content)
-        fileupload = UploadFile('ImprovementPlan.txt')
-        if preferred_set.find('2') != -1 or preferred_set.find('second') != -1:
+            # Make the API call
+            response = openai.ChatCompletion.create(
+                model="gpt-4-turbo",
+                messages=messages,
+                max_tokens=1000,
+            )
+
+            # Extract the response content
+            response_content = response['choices'][0]['message']['content']
+            print(response_content)
+        
+            analysis_file = 'ImprovementPlan.txt'
+            with open(analysis_file, "w") as file:
+                # Write some text to the file
+                file.write(response_content)
+            fileupload = UploadFile('ImprovementPlan.txt')
+            if preferred_set.find('2') != -1 or preferred_set.find('second') != -1:
+                fileupload.upload_file_to_drive(fileupload.filename, fileupload.filename, "text/plain", self.FolderID_2)
+            elif preferred_set.find('1') != -1 or preferred_set.find('first') != -1:
+                fileupload.upload_file_to_drive(fileupload.filename, fileupload.filename, "text/plain", self.FolderID_1)
+            return response_content
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            analysis_file = 'ImprovementPlan.txt'
+            with open(analysis_file, "w") as file:
+                # Write some text to the file
+                file.write("Provide greater detail with regards to spatial, temporal and visual aspects of the animation")
+            fileupload = UploadFile('ImprovementPlan.txt')
+            
             fileupload.upload_file_to_drive(fileupload.filename, fileupload.filename, "text/plain", self.FolderID_2)
-        elif preferred_set.find('1') != -1 or preferred_set.find('first') != -1:
-            fileupload.upload_file_to_drive(fileupload.filename, fileupload.filename, "text/plain", self.FolderID_1)
-        return response_content
+            response_content="Provide greater detail with regards to spatial, temporal and visual aspects of the animation"
+            return response_content
 
     def GetParentFolder(self,preferred_set):
 
         if preferred_set.find('2') != -1 or preferred_set.find('second') != -1:
+            print('Set 2 get parent')
             subfolder_id=self.FolderID_2
         elif preferred_set.find('1') != -1 or preferred_set.find('first') != -1:
+            print('Set 1 get parent')
             subfolder_id=self.FolderID_1
+        elif preferred_set=='Set 2':
+            subfolder_id=self.FolderID_2
         else:
-            self.CompareKinographs()
-
+            preferred_set=self.CompareKinographs()
+            return self.GetParentFolder(preferred_set)
+        print(subfolder_id)
         drive_service = authenticate_drive()
         # Fetch the metadata of the subfolder
         file = drive_service.files().get(fileId=subfolder_id, fields='id, name, parents').execute()
@@ -411,7 +435,7 @@ class FirstCycle:
         return base64_image_list
     def FirstCycle(self):
         VideoStream=self.Kinograph.get_file_stream(self.FileName1, self.FolderID1)
-        SubFolder=self.Kinograph.extractImages(VideoStream, self.FolderID1, 20)
+        SubFolder=self.Kinograph.extractImages(VideoStream, self.FolderID1, 40)
         Image_Set=self.DownloadKinograph(SubFolder)
         messages = [
             {
@@ -453,26 +477,27 @@ class FirstCycle:
         fileupload.upload_file_to_drive(fileupload.filename, fileupload.filename, "text/plain", SubFolder)
         return response_content
 class FullCycle:
-    def __init__(self, FileName1, FileName2, FolderID1, FolderID2):
+    def __init__(self, FileName1, FileName2, FolderID1, FolderID2, Prompt):
         self.FileName1 = FileName1
         self.FileName2 = FileName2
         self.FolderID1 = FolderID1
         self.FolderID2 = FolderID2
+        self.Prompt=Prompt
     def Cylce(self):
         if self.CheckForKinograph(self.FolderID1)==False:
 
             kinograph1 = Kinograph()
             VideoStream1 = kinograph1.get_file_stream(self.FileName1, self.FolderID1)
-            SubFolder1 = kinograph1.extractImages(VideoStream1, self.FolderID1, 20)
+            SubFolder1 = kinograph1.extractImages(VideoStream1, self.FolderID1, 40)
         else:
             SubFolder1=self.CheckForKinograph(self.FolderID1)
         if self.CheckForKinograph(self.FolderID2)==False:
             kinograph2 = Kinograph()
             VideoStream2 = kinograph2.get_file_stream(self.FileName2, self.FolderID2)
-            SubFolder2 = kinograph2.extractImages(VideoStream2, self.FolderID2, 20)
+            SubFolder2 = kinograph2.extractImages(VideoStream2, self.FolderID2, 40)
         else:
             SubFolder2=self.CheckForKinograph(self.FolderID2)
-        Analysis_Test = LLMAnalysis(SubFolder1, SubFolder2, 'Create an animation of balls bouncing')
+        Analysis_Test = LLMAnalysis(SubFolder1, SubFolder2, self.Prompt)
         preferred_set = Analysis_Test.CompareKinographs()
         print(preferred_set)
         Code = Analysis_Test.GetPreviousCodeGeneration(preferred_set)
@@ -489,7 +514,9 @@ class FullCycle:
         if items:
             return items[0]['id']  # Returns True and the folder ID if found
         return False    # Returns False and None if not found
+
 if __name__ == '__main__':
-    CycleInstance=FullCycle('BouncingBalls2.mp4','MultipleBallsBouncing_o1.mp4',
-              '19DpaJNOCZYj6hqv-TB171EqfgPt9hUUA','1-dTeKObHrL_EuHkkdXIV7jeK6swwjHMl')
-    Code=CycleInstance.Cycle()
+    CycleInstance=FullCycle('BouncingBalls01.mp4','BouncingBalls00.mp4',
+              '1p4BWjICXHX0L_o7eM5bFq2nb_Fa_q7pY','1yEYXk3bjPKX_VoBmYyQ1I7zTlQvlbl7u','Create me a python script for a blender animation of a Balls bouncing')
+    Code=CycleInstance.Cylce()
+    print(Code)
