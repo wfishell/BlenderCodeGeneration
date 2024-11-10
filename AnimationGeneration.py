@@ -131,7 +131,7 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
                             f"Use {self.TemplateCode} as a general template to improve the quality of the animation "
                             f"Return the code enclosed in triple backticks like ``` at both the start and end of the code section. "
                             f"Lastly, always save it as a blend file to this path {self.filename}"
-                            f"Do not include anything in the code that assigns a resolution to the render or renders the image"
+                            f"Do not include anything in the code that assigns a resolution to the render or renders the images"
                             f"assume no objects or functions have been created."
                             f"Do not use a main() class and avoid attribute errors."
                             f"Do not use the cell_fracture_operator"
@@ -182,9 +182,9 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
                         # Set the container to MPEG-4
                         render_start_time=time.time()
                         bpy.context.scene.render.ffmpeg.format = 'MPEG4'
+                        bpy.ops.render.render(animation=True)
                         render_end_time=time.time()
                         self.json_file[f'render_time_{Kill_Function}']=render_end_time-render_start_time
-                        bpy.ops.render.render(animation=True)
                         """
 
             formatted_code_stage_1=textwrap.dedent(extracted_code)
