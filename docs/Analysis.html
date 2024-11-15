@@ -3,107 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluation of animations generated using o1 Model</title>
+    <title>o1 Experiment Analysis</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0;
-            padding: 20px;
+            line-height: 1.6;
+            margin: 20px; /* Optional for spacing around the content */
         }
-
         h1 {
             text-align: center;
-            font-size: 2em;
-            margin-bottom: 20px;
         }
-
-        .container {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            max-width: 1200px;
-            margin-bottom: 30px;
+        p, h2, li {
+            text-align: left; /* Anchor text to the left */
         }
-
-        .section {
-            flex: 1;
-            text-align: center;
-            margin: 0 10px;
-        }
-
-        .section img, .section video {
-            width: 100%;
-            height: 400px;
-            border: 1px solid #ccc;
-        }
-
-        .section h2 {
-            font-size: 1.2em;
-            margin-top: 10px;
+        ul {
+            padding-left: 20px; /* Add some indentation for list items */
         }
     </style>
 </head>
 <body>
-    <h1>o1 Experiement Analysis</h1>
-  <p>This test of animation generation using the o1 and GPT-4 model showcased the ability of OpenAI's LLMs' ability
-      to generate high quality animations in three of the 4 test prompts. Furthermore this experiment showed the ability of this 
-      multi modal approach to create animations which build off of the prior instance and improve upon it. The three prompts that had 
-      success were:
-        <li>Create me a python script for a blender animation of a ball bouncing</li>
-        <li>Create me a python script for an object driving through a wall</li>
-        <li>Create me a python script for a blender animation of a Planets orbitting around the Sun</li><br>
-      while 
-        <li>Create me a python script for a blender animation of a quilt falling onto a sphere</li><br>
-      struggled to create any compelling animationd and failed to improve on previous instances in any of 
-      the three trials. 
-  </p> <br>
+    <h1>o1 Experiment Analysis</h1>
+    <p>This test of animation generation using the o1 and GPT-4 model showcased the ability of OpenAI's LLMs'
+        to generate high-quality animations in three of the 4 test prompts. Furthermore, this experiment showed the ability of this 
+        multimodal approach to create animations that build off of the prior instance and improve upon it. The three prompts that had 
+        success were:
+        <ul>
+            <li>Create me a Python script for a Blender animation of a ball bouncing</li>
+            <li>Create me a Python script for an object driving through a wall</li>
+            <li>Create me a Python script for a Blender animation of planets orbiting around the Sun</li>
+        </ul>
+        while 
+        <ul>
+            <li>Create me a Python script for a Blender animation of a quilt falling onto a sphere</li>
+        </ul>
+        struggled to create any compelling animations and failed to improve on previous instances in any of 
+        the three trials. 
+    </p>
     <h2>Methodology</h2>
     <p>We ran the Blender Animation Generation pipeline a total of 12 times. This was evenly split across each prompt, with 
-    each trial having 3 'evolutions': an evolution is one instance of generating an animation. If the during an instance the
-    LLM failed to succesfully generate code after 4 queries of the LLM, we marked that trial as a failure. We initialized the start of each 
-    trial with a <a href="https://wfishell.github.io/BlenderCodeGeneration/CodeTemplate.html" target="_blank" title="simple blender script">simple blender script</a>
-    of a cube moving with a light source and camera pointed at it. This approach was adopted to solve the cold start problem of generating animations without any prior information, 
-    and helps the LLM from waisting instances on rendering useless information. To generate the blender script we used OpenAI's o1 model, as 
-    it has shown to have a much lower failure rate then GPT-4 on the problem of generating animations using Blender. We rendered each animation at a resolution of 256 X 256 to speed up rendering times, but
-        output the file so that people can render at a higher resolution at a later point in time. In order to then analyze the work
-    of each succesive generation, we used OpenAi's GPT-4-Turbo model and passed in a sequence of images. This model was used to compare the Nth-1 and Nth-2 instances and 
-    pass on to the Nth instance the code from the instance that the LLM decided aligned more closley to the prompt. GPT-4-Turbo was also used to provide critques on the instance 
-    it deemed was the champion instance and these critques were passed into the prompt for the Nth instance. Due to recent restricitons placed by OpenAI, we had to limit
-    the number of images in any one sequence to 3 images taken 40 frames apart. The break down of this is 3 images for each of the sets when comparing, and 3 images for the set that 
-    is promoted when critquing. Overall this methodology is consistent with the approach we have been taking for the entire time with the exception of the size of the number
-    of images passed through in the kinographs, which went from 10 images taken 20 frames apart down to the current level.</p><br>
+        each trial having 3 'evolutions': an evolution is one instance of generating an animation. If during an instance the
+        LLM failed to successfully generate code after 4 queries of the LLM, we marked that trial as a failure. We initialized the start of each 
+        trial with a <a href="https://wfishell.github.io/BlenderCodeGeneration/CodeTemplate.html" target="_blank" title="simple blender script">simple Blender script</a>
+        of a cube moving with a light source and camera pointed at it. This approach was adopted to solve the cold start problem of generating animations without any prior information, 
+        and helps the LLM from wasting instances on rendering useless information. To generate the Blender script, we used OpenAI's o1 model, as 
+        it has shown to have a much lower failure rate than GPT-4 on the problem of generating animations using Blender. We rendered each animation at a resolution of 256x256 to speed up rendering times but
+        output the file so that people can render at a higher resolution later. In order to then analyze the work
+        of each successive generation, we used OpenAI's GPT-4-Turbo model and passed in a sequence of images. This model was used to compare the Nth-1 and Nth-2 instances and 
+        pass on to the Nth instance the code from the instance that the LLM decided aligned more closely to the prompt. GPT-4-Turbo was also used to provide critiques on the instance 
+        it deemed was the champion instance, and these critiques were passed into the prompt for the Nth instance. Due to recent restrictions placed by OpenAI, we had to limit
+        the number of images in any one sequence to 3 images taken 40 frames apart. The breakdown of this is 3 images for each of the sets when comparing, and 3 images for the set that 
+        is promoted when critiquing. Overall, this methodology is consistent with the approach we have been taking for the entire time with the exception of the size of the number
+        of images passed through in the kinographs, which went from 10 images taken 20 frames apart down to the current level.
+    </p>
+    <p>The overall results were positive, with 10 of the 12 trials succeeding, a pass rate of 83%, resulting in 33 animations generated. The exception again being the "Quilt Falling" animations,
+        which were unable to match the quality of animation that we had previously generated with 10 kinographs. This change did not have an effect on the quality of other animations, so further 
+        experimentation is needed to conclusively say what caused the reduction in quality of the "Quilt Falling" animations. Otherwise, the change in render times, the increase in temporal motion, 
+        humanistic analysis, and the types of errors that occurred all indicate that the code generated is of increasing complexity and leading to higher quality animations.
+    </p>
 
-    <p>The overall results were positive with 10 of the 12 trials succeding, a pass rate of 83%, resulting in 33 animaitons generated. The exception again being the "Quilt Falling" animations
-       which were unable to match the quality of animation that we had previously generated with 10 kinographs. This change did not have an effect on the quality of other animations, so further 
-       experimetnation is needed to conclusively say what caused he reduction in quality of the "Quilt Falling" animaitions. Otherwise, the change in render times, the increase in temporal motion, 
-        humanistic analysis,and the types of errors that occured all indicate that the code generated is of increasing complexity and leading to higher quality animations</p>
-
-    <h1>Orbiting Planets o1 Model Test 2024-11-09</h1>
-    <div class="container">
-        <div class="section">
-            <h2>Third Generation Third Trial</h2>
-            <video controls autoplay loop muted>
-                <source src="PlanetsOrbiting22.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
+    <h2>Elasped Time by Query and Render Time/21>
         <div class="section">
             <h2>Error Plot</h2>
-            <img src="PlanetOrbitting_2024-11-09_ErrorPlot.png" alt="Error Plot">
-        </div>
-        <div class="section">
-            <h2>Query Time</h2>
-            <img src="PlanetOrbitting_2024-11-09_QueryTimePlot.png" alt="Query Time Plot">
-        </div>
-    </div>
-
+            <img src="Combined_Render_Times_2024-11-14.png" alt="Error Plot">
+        </div><br>
+        
+  
     <h1>Drive Through Wall o1 Model Test 2024-11-09</h1>
     <div class="container">
         <div class="section">
