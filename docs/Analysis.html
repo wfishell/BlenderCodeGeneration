@@ -136,3 +136,15 @@
         <b>GPT-4 Critque After First Instance</b>: "To enhance the realism of this kinograph showcasing bouncing balls, consider incorporating more naturalistic motion physics; currently, 
             each ball appears to hover without clear interaction with the surface. Adding shadow detail and slightly varying the bounces and rebound speeds of each ball according to their 
             apparent material and weight could add more depth and realism to the animation."<br></p>
+
+    <div class="container">
+        <img src="CodeChang_2_Instance1_to_2.png" alt="Code Change 1 Instance 1-2">
+        <div class="description">
+            <h3></h3>
+            <p>This code change shows LLM changing how it uses blender's BSDF shader to create more dynamic coloring of the balls. This provides more realism to he balls and is directly related
+                to the critque provided by the LLM by changing the material to add more depth and realsism. As well as this change the new instance includes this new line of code<br>
+            <pre>light.data.angle = 0.5  # Soften the shadows</pre> which helps create more dynamic shadowing on the objects as they fall. This is also striaght from the LLM's
+                critque of the first animation
+            <p></p>
+            </p>
+        </div>
