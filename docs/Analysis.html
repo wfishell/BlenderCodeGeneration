@@ -38,10 +38,62 @@
             height: auto;
             margin-top: 10px; /* Add some spacing between video and image */
         }
-    </style>
+     </style>
 </head>
 <body>
     <h1>o1 Experiment Analysis</h1>
+    <p>This test of animation generation using the o1 and GPT-4 model showcased the ability of OpenAI's LLMs'
+        to generate high-quality animations in three of the 4 test prompts. Furthermore, this experiment showed the ability of this 
+        multimodal approach to create animations that build off of the prior instance and improve upon it. The three prompts that had 
+        success were:
+        <ul>
+            <li><b>Create me a Python script for a Blender animation of a ball bouncing</b></li>
+            <li><b>Create me a Python script for an object driving through a wall</b></li>
+            <li><b>Create me a Python script for a Blender animation of planets orbiting around the Sun</b></li>
+        </ul>
+        while 
+        <ul>
+            <li><b>Create me a Python script for a Blender animation of a quilt falling onto a sphere</b></li>
+        </ul>
+        struggled to create any compelling animations and failed to improve on previous instances in any of 
+        the three trials. 
+    </p>
+    <h2>Methodology</h2>
+    <p>We ran the Blender Animation Generation pipeline a total of 12 times. This was evenly split across each prompt, with 
+        each trial having 3 'evolutions': an evolution is one instance of generating an animation. If during an instance the
+        LLM failed to successfully generate code after 4 queries of the LLM, we marked that trial as a failure. We initialized the start of each 
+        trial with a <a href="https://wfishell.github.io/BlenderCodeGeneration/CodeTemplate.html" target="_blank" title="simple blender script">simple Blender script</a>
+        of a cube moving with a light source and camera pointed at it. This approach was adopted to solve the cold start problem of generating animations without any prior information, 
+        and helps the LLM from wasting instances on rendering useless information. To generate the Blender script, we used OpenAI's o1 model, as 
+        it has shown to have a much lower failure rate than GPT-4 on the problem of generating animations using Blender. We rendered each animation at a resolution of 256x256 to speed up rendering times but
+        output the file so that people can render at a higher resolution later. In order to then analyze the work
+        of each successive generation, we used OpenAI's GPT-4-Turbo model and passed in a sequence of images. This model was used to compare the Nth-1 and Nth-2 instances and 
+        pass on to the Nth instance the code from the instance that the LLM decided aligned more closely to the prompt. GPT-4-Turbo was also used to provide critiques on the instance 
+        it deemed was the champion instance, and these critiques were passed into the prompt for the Nth instance. Due to recent restrictions placed by OpenAI, we had to limit
+        the number of images in any one sequence to 3 images taken 40 frames apart. The breakdown of this is 3 images for each of the sets when comparing, and 3 images for the set that 
+        is promoted when critiquing. Overall, this methodology is consistent with the approach we have been taking for the entire time with the exception of the size of the number
+        of images passed through in the kinographs, which went from 10 images taken 20 frames apart down to the current level.
+    </p>
+    <p>The overall results were positive, with 10 of the 12 trials succeeding, a pass rate of 83%, resulting in 33 animations generated. The exception again being the "Quilt Falling" animations,
+        which were unable to match the quality of animation that we had previously generated with 10 kinographs. This change did not have an effect on the quality of other animations, so further 
+        experimentation is needed to conclusively say what caused the reduction in quality of the "Quilt Falling" animations. Otherwise, the change in render times, the increase in temporal motion, 
+        humanistic analysis, and the types of errors that occurred all indicate that the code generated is of increasing complexity and leading to higher quality animations.
+    </p>
+
+    <h2>Elasped Time by Query and Render Time</h2>
+<div class="section">
+    <img src="Combined_Render_Times_2024-11-14.png" alt="Error Plot" style="width: 100%; max-width: 100%; height: auto;">
+</div><br>
+  <p>The Pipeline is spending less time querying in later the third instance compared to the first instance on average in all 
+      prompts, but there is not a strong overall trend of the LLM spending different amounts of time on code generation in later instances.<br>
+      <br>
+      While this is true, interestingly enough o1 is spending almost double the amount of time on the first pass at generating the code and is 
+      calling on the LLM a fewer number of times to generate an animation. In later instances the LLM is recieving more complex code and prompts and is able
+      to process these in fewer numbers of queries.<br>
+      <br>
+      The average render times of succesive instances further illustrate the increasing complexity with three of the four prompts having average render times
+      in the third instance that are 1.5-2 times longer then in the first instance.
+      </p>
 
     <h2>Analyzing Motion Complexity with Lucas-Kanade Optical Flow</h2>
     <div class="video-container">
@@ -69,6 +121,7 @@
             </video>
             <img src="https://wfishell.github.io/BlenderCodeGeneration/Bouncing_Balls_Instance_3Lucas_Kanade_Flow_2024-11-14.png" alt="Instance 3 Snapshot">
         </div>
+        <p><li></li></p>
     </div>
 </body>
 </html>
