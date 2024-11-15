@@ -173,9 +173,9 @@
     <div class="description">
         <p>
     More trials need to be run to truly see understand the relationship between each successive instance and the frequency of errors and what types of errors appear, however it is worth noting
-    that there is an increase in context errors and corresponding decrease in attribute errors from instance 1 to instance 3. There are two possibilites:<br> </p>
-    <li>This is nothing and there is just a substituion effect in how we are identifying context errors and attribute errors and the same frequency of errors is happeneing across instances</li><br>
-    <li>We have seen that as that code generated in each succesive iteration delves deeper into the blender package. Instead of making simple attribute errors, the code is making context errors where 
+    that there is an increase in "not found" errors and corresponding decrease in attribute errors from instance 1 to instance 3. There are two possibilites:<br> </p>
+    <li>This is nothing and there is just a substituion effect in how we are identifying "not found" errors and attribute errors and the same frequency of errors is happeneing across instances</li><br>
+    <li>We have seen that as that code generated in each succesive iteration delves deeper into the blender package. Instead of making simple attribute errors, the code is making "not found" errors where 
     it is reffering to libaries that have not been properly referenced. This indicates the LLM is potentially trying to pull in more tools to improve its work</li>
     <p><b>We will look into in more detail how these errors actually differ once we have gathered a larger sample</b></p>
     </div>
