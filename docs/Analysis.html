@@ -67,31 +67,39 @@
 </div><br>
   <p>The Pipeline is spending less time querying in later the third instance compared to the first instance on average in all 
       prompts, but there is not a strong overall trend of the LLM spending different amounts of time on code generation in later instances.<br>
+      <br>
       While this is true, interestingly enough o1 is spending almost double the amount of time on the first pass at generating the code and is 
       calling on the LLM a fewer number of times to generate an animation. In later instances the LLM is recieving more complex code and prompts and is able
       to process these in fewer numbers of queries.<br>
+      <br>
       The average render times of succesive instances further illustrate the increasing complexity with three of the four prompts having average render times
       in the third instance that are 1.5-2 times longer then in the first instance.
       </p>
-    <h1>Drive Through Wall o1 Model Test 2024-11-09</h1>
-    <div class="container">
+    <h2>Analyzing Motion Complexity with Lucas-Kanade Optical Flow</h2>
+<div class="container">
         <div class="section">
-            <h2>Third Generation Second Trial</h2>
+            <h3>Bouncing Balls Instance 1</h3>
             <video controls autoplay loop muted>
-                <source src="DriveThroughWall21.mp4" type="video/mp4">
+                <source src="Lucas_Kanade_Flow_Bouncing_Balls_Instance_1_2024-11-14.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
         <div class="section">
-            <h2>Error Plot</h2>
-            <img src="DriveThroughWall_2024-11-09_ErrorPlot.png" alt="Error Plot">
+            <h3>Bouncing Balls Instance 2</h3>
+            <video controls autoplay loop muted>
+                <source src="Lucas_Kanade_Flow_Bouncing_Balls_Instance_2_2024-11-14.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
         <div class="section">
-            <h2>Query Time</h2>
-            <img src="DriveThroughWall_2024-11-09_QueryTimePlot.png" alt="Query Time Plot">
+            <h3>Bouncing Balls Instance 3</h3>
+            <video controls autoplay loop muted>
+                <source src="Lucas_Kanade_Flow_Bouncing_Balls_Instance_3_2024-11-14.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
     </div>
-
+        
     <h1>Quilt Falling o1 Model Test 2024-11-09</h1>
     <div class="container">
         <div class="section">
