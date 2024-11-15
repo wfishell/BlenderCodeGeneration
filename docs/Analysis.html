@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bouncing Balls and Additional Tests</title>
+    <title>Evaluation of animations generated using o1 Model</title>
     <style>
         * {
             box-sizing: border-box;
@@ -51,24 +51,39 @@
     </style>
 </head>
 <body>
-    <h1>Bouncing Balls o1 Model Test 2024-11-09</h1>
-    <div class="container">
-        <div class="section">
-            <h2>Third Generation Third Trial</h2>
-            <video controls autoplay loop muted>
-                <source src="BouncingBalls22.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-        <div class="section">
-            <h2>Error Plot</h2>
-            <img src="BouncingBalls_2024-11-09_ErrorPlot.png" alt="Error Plot">
-        </div>
-        <div class="section">
-            <h2>Query Time</h2>
-            <img src="BouncingBalls_2024-11-09_QueryTimePlot.png" alt="Query Time Plot">
-        </div>
-    </div>
+    <h1>o1 Experiement Analysis</h1>
+  <p>This test of animation generation using the o1 and GPT-4 model showcased the ability of OpenAI's LLMs' ability
+      to generate high quality animations in three of the 4 test prompts. Furthermore this experiment showed the ability of this 
+      multi modal approach to create animations which build off of the prior instance and improve upon it. The three prompts that had 
+      success were:
+        <li>Create me a python script for a blender animation of a ball bouncing</li>
+        <li>Create me a python script for an object driving through a wall</li>
+        <li>Create me a python script for a blender animation of a Planets orbitting around the Sun</li><br>
+      while 
+        <li>Create me a python script for a blender animation of a quilt falling onto a sphere</li><br>
+      struggled to create any compelling animationd and failed to improve on previous instances in any of 
+      the three trials. 
+  </p> <br>
+    <h2>Methodology</h2>
+    <p>We ran the Blender Animation Generation pipeline a total of 12 times. This was evenly split across each prompt, with 
+    each trial having 3 'evolutions': an evolution is one instance of generating an animation. If the during an instance the
+    LLM failed to succesfully generate code after 4 queries of the LLM, we marked that trial as a failure. We initialized the start of each 
+    trial with a <a href="https://wfishell.github.io/BlenderCodeGeneration/CodeTemplate.html" target="_blank" title="simple blender script">simple blender script</a>
+    of a cube moving with a light source and camera pointed at it. This approach was adopted to solve the cold start problem of generating animations without any prior information, 
+    and helps the LLM from waisting instances on rendering useless information. To generate the blender script we used OpenAI's o1 model, as 
+    it has shown to have a much lower failure rate then GPT-4 on the problem of generating animations using Blender. We rendered each animation at a resolution of 256 X 256 to speed up rendering times, but
+        output the file so that people can render at a higher resolution at a later point in time. In order to then analyze the work
+    of each succesive generation, we used OpenAi's GPT-4-Turbo model and passed in a sequence of images. This model was used to compare the Nth-1 and Nth-2 instances and 
+    pass on to the Nth instance the code from the instance that the LLM decided aligned more closley to the prompt. GPT-4-Turbo was also used to provide critques on the instance 
+    it deemed was the champion instance and these critques were passed into the prompt for the Nth instance. Due to recent restricitons placed by OpenAI, we had to limit
+    the number of images in any one sequence to 3 images taken 40 frames apart. The break down of this is 3 images for each of the sets when comparing, and 3 images for the set that 
+    is promoted when critquing. Overall this methodology is consistent with the approach we have been taking for the entire time with the exception of the size of the number
+    of images passed through in the kinographs, which went from 10 images taken 20 frames apart down to the current level.</p><br>
+
+    <p>The overall results were positive with 10 of the 12 trials succeding, a pass rate of 83%, resulting in 33 animaitons generated. The exception again being the "Quilt Falling" animations
+       which were unable to match the quality of animation that we had previously generated with 10 kinographs. This change did not have an effect on the quality of other animations, so further 
+       experimetnation is needed to conclusively say what caused he reduction in quality of the "Quilt Falling" animaitions. Otherwise, the change in render times, the increase in temporal motion, 
+        humanistic analysis,and the types of errors that occured all indicate that the code generated is of increasing complexity and leading to higher quality animations</p>
 
     <h1>Orbiting Planets o1 Model Test 2024-11-09</h1>
     <div class="container">
