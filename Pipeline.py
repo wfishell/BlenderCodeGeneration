@@ -103,6 +103,7 @@ class Pipeline:
 
                         # Upload JSON File
                         AnimationInstance.json_file['elapsed_time'] = elasped_time
+                        AnimationInstance.json_file['Failed']='False'
                         AnimationInstance.json_file['Code'] = ExtractedCode
                         prompt_file = F"{ParentFolder.FolderName}{i}.json"
                         with open(prompt_file, "w") as file:
@@ -148,6 +149,7 @@ class Pipeline:
 
                         # Upload JSON File
                         AnimationInstance.json_file['elapsed_time'] = elasped_time
+                        AnimationInstance.json_file['Failed']='False'
                         AnimationInstance.json_file['Code'] = ExtractedCode
                         prompt_file = F"{ParentFolder.FolderName}{i}.json"
                         with open(prompt_file, "w") as file:

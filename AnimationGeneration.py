@@ -198,16 +198,21 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
             print(f"Error: {e}")
             Error=InterpreterError(e)
             error=str(e)
-            line_number=my_exec(formatted_code)
-            if error in self.json_file:
-                self.json_file[error].append((formatted_code,line_number))
-            else:
-                self.json_file[error]=[(formatted_code,line_number)]
-            print(line_number)
-            # Modify the prompt to retry with additional guidance
-            new_prompt = (f"{extracted_code} this was returning an error {e} at line number {line_number} can you modify this code so that it addresses this error. Ensure bpy is defined ")
-            print("Retrying with modified prompt...")
+            try:
+                line_number=my_exec(formatted_code)
+                if error in self.json_file:
+                    self.json_file[error].append((formatted_code,line_number))
+                else:
+                    self.json_file[error]=[(formatted_code,line_number)]
+                print(line_number)
+                # Modify the prompt to retry with additional guidance
+                new_prompt = (f"{extracted_code} this was returning an error {e} at line number {line_number} can you modify this code so that it addresses this error. Ensure bpy is defined ")
+                print("Retrying with modified prompt...")
 
-            # Retry the function with the new prompt
-            Kill_Function_Updated=Kill_Function+1
-            return self.chat_with_LLM(new_prompt,Kill_Function_Updated)
+                # Retry the function with the new prompt
+                Kill_Function_Updated=Kill_Function+1
+                return self.chat_with_LLM(new_prompt,Kill_Function_Updated)
+            except Exception as e:
+                self.json_file[f'GPT_Query_Bug_{Kill_Function}']='failed to extract code from LLM'
+                Kill_Function_Updated=Kill_Function+1
+                return self.chat_with_LLM(self.prompt,Kill_Function_Updated)                

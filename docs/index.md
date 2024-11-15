@@ -117,6 +117,8 @@
         <a href="https://github.com/wfishell/BlenderCodeGeneration" style="margin-right: 10px;">Github Repo</a>
         <a href="KinographicPipeline.html" style="margin-right: 10px;">Kinographic Pipeline</a>
         <a href="CodeTemplate.html">Initial Code Template</a>
+        <a href="Analysis.html">Analysis</a>
+
     </div>
     <div class="video-container">
         <div class="video-item">

@@ -1,9 +1,0 @@
-,WarningMessage,Frequency
-0,"unclosed <ssl.SSLSocket fd=10, family=30, type=1, proto=0, laddr=('2603:7000:9800:3af9:502:8d0c:5c2a:54d7', 61649, 0, 0), raddr=('2607:f8b0:4006:81f::200a', 443, 0, 0)>",1
-1,"unclosed <ssl.SSLSocket fd=11, family=30, type=1, proto=0, laddr=('2603:7000:9800:3af9:502:8d0c:5c2a:54d7', 61650, 0, 0), raddr=('2607:f8b0:4006:809::200a', 443, 0, 0)>",1
-2,"unclosed <ssl.SSLSocket fd=12, family=30, type=1, proto=0, laddr=('2603:7000:9800:3af9:502:8d0c:5c2a:54d7', 61654, 0, 0), raddr=('2607:f8b0:4006:809::200a', 443, 0, 0)>",1
-3,"unclosed <ssl.SSLSocket fd=13, family=30, type=1, proto=0, laddr=('2603:7000:9800:3af9:502:8d0c:5c2a:54d7', 61658, 0, 0), raddr=('2607:f8b0:4006:81f::200a', 443, 0, 0)>",1
-4,"unclosed <ssl.SSLSocket fd=14, family=30, type=1, proto=0, laddr=('2603:7000:9800:3af9:502:8d0c:5c2a:54d7', 61659, 0, 0), raddr=('2607:f8b0:4006:809::200a', 443, 0, 0)>",1
-5,"unclosed <ssl.SSLSocket fd=6, family=30, type=1, proto=0, laddr=('2603:7000:9800:3af9:502:8d0c:5c2a:54d7', 61643, 0, 0), raddr=('2607:f8b0:4006:81f::200a', 443, 0, 0)>",1
-6,"unclosed <ssl.SSLSocket fd=7, family=30, type=1, proto=0, laddr=('2603:7000:9800:3af9:502:8d0c:5c2a:54d7', 61644, 0, 0), raddr=('2607:f8b0:4006:809::200a', 443, 0, 0)>",1
-7,"unclosed <ssl.SSLSocket fd=9, family=30, type=1, proto=0, laddr=('2603:7000:9800:3af9:502:8d0c:5c2a:54d7', 61653, 0, 0), raddr=('2607:f8b0:4006:81f::200a', 443, 0, 0)>",1
