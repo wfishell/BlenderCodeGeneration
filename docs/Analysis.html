@@ -61,12 +61,18 @@
         humanistic analysis, and the types of errors that occurred all indicate that the code generated is of increasing complexity and leading to higher quality animations.
     </p>
 
-    <h2>Elasped Time by Query and Render Time/21>
+    <h2>Elasped Time by Query and Render Time</h2>
 <div class="section">
-    <h2>Error Plot</h2>
     <img src="Combined_Render_Times_2024-11-14.png" alt="Error Plot" style="width: 100%; max-width: 100%; height: auto;">
 </div><br>
-  
+  <p>The Pipeline is spending less time querying in later the third instance compared to the first instance on average in all 
+      prompts, but there is not a strong overall trend of the LLM spending different amounts of time on code generation in later instances.<br>
+      While this is true, interestingly enough o1 is spending almost double the amount of time on the first pass at generating the code and is 
+      calling on the LLM a fewer number of times to generate an animation. In later instances the LLM is recieving more complex code and prompts and is able
+      to process these in fewer numbers of queries.<br>
+      The average render times of succesive instances further illustrate the increasing complexity with three of the four prompts having average render times
+      in the third instance that are 1.5-2 times longer then in the first instance.
+      </p>
     <h1>Drive Through Wall o1 Model Test 2024-11-09</h1>
     <div class="container">
         <div class="section">
