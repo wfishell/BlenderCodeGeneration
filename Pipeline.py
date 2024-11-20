@@ -9,7 +9,13 @@ class Pipeline:
         self.Prompt2=("PlanetsOrbiting","Create me a python script for a blender animation of a Planets orbitting around the Sun")
         self.Prompt3=("QuiltFalling","Create me a python script for a blender animation of a quilt falling onto a sphere")
         self.Prompt4=("DrivingThroughWall","Create me a python script for an object driving through a wall")
-        self.PromptList=[self.Prompt1,self.Prompt2,self.Prompt3,self.Prompt4]
+        self.Prompt5 = ("DominoEffect", "Create me a python script for a blender animation of dominoes falling in a sequence")
+        self.Prompt6 = ("FireworksExploding", "Create me a python script for a blender animation of fireworks exploding in the night sky")
+        self.Prompt7 = ("TreeGrowing", "Create me a python script for a blender animation of a tree growing from a seed")
+        self.Prompt8 = ("PendulumSwing", "Create me a python script for a blender animation of a pendulum swinging back and forth")
+        self.Prompt9 = ("WreckingBallCrash", "Create me a python script for a blender animation of a wrecking ball smashing through a wall")
+        self.Prompt10 = ("MarbleRolling", "Create me a python script for a blender animation of a marble rolling down a winding ramp")
+        self.PromptList=[self.Prompt1,self.Prompt2,self.Prompt3,self.Prompt4,self.Prompt5, self.Prompt6,self.Prompt7, self.Prompt8, self.Prompt9, self.Prompt10]
     def RunPipeline(self):
 
         MasterFolder=MassUpload(f'AnimationPipelineTestInstance {datetime.now().date()}')
@@ -23,7 +29,7 @@ class Pipeline:
                 ParentFolder=MassUpload(F"{Prompt}{i}", PromptFolderID)
                 ParentFolderID=ParentFolder.create_subfolder()
                 SubFolderID_LST=[]
-                for i in range (0,3):
+                for i in range (0,5):
                     start_time = time.time()
                     if i==0:
                         AnimationInstance = animationgeneartion(Prompt,

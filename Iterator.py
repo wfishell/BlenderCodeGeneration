@@ -221,7 +221,7 @@ class LLMAnalysis:
                             "type": "text",
                             "text": f"I have two sets of images functioning as kineographs for this prompt: {self.prompt}."
                                     f"which one is performing better at representing the prompt and why. Consider the images"
-                                    f"come in order in their respective sets (return name of better set surounded by 3 backticks  on each side``` ```"
+                                    f"come in order in their respective sets (return name of the set, set 1 or set 2, which more closely aligns with the prompt surounded by 3 backticks  on each side``` ```"
                                     f"as well as your analysis"
                         }
                     ]

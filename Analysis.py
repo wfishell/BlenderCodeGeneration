@@ -670,10 +670,12 @@ def quantify_optical_flow(file_content, Title):
 
 
 if __name__=='__main__':
-    '''Animation_Tests={'BouncingBalls':'1B_8X6zNoSybJIlKCodb3cAKph3J0FGwH',
-                        'PlanetOrbitting':'1BTzPw7dXIbzUKxXyyWxcrwu8NWW_QcpW',
-                        'QuiltFalling':'1MBPff_u8VDaGpyOj7XAudMvNydeVdn6w',
-                        'DriveThroughWall':'1HL4x82wwIt2AAS19HbqlDeJnbPt7fRV4'}
+    Animation_Tests={'BouncingBalls':'1HvocLnxjpYmDs3JorPzAoOzhVzh8OQH5',
+                        'PlanetOrbitting':'1tP4aRR9R1qgnIP-J2hAr_srgUsWfemJr',
+                        'QuiltFalling':'1fJcByWWYgWLfiwsy_nMcx4MaVMxzgFqB',
+                        'DriveThroughWall':'1-l77Hr4huDb6sOR6wwLJmYzBYa5O1hqF',
+                        'DominoEffect':'1gL-khvBGD0t63ajcW0jl1_wqqQ0wDu4-',
+                        'FireworksExploding':'12-3zRVqVWGVSGB_zWTtLtDm2VI1a992C'}
 
     PlotErrorEvolution(Animation_Tests)
     PlotErrorRates(Animation_Tests)
@@ -694,10 +696,10 @@ if __name__=='__main__':
     # Display the plot
     plt.tight_layout()
     plt.savefig(f'./docs/Combined_Render_Times_{datetime.today().date()}.png', format="png", dpi=300, bbox_inches="tight")
-        '''
-    BouncingBallsTrial2=individual_file_analysis('1eNMcW2xOH09TfWpRbr_0rshCfV_da9Oh')
+        
+    '''BouncingBallsTrial2=individual_file_analysis('1eNMcW2xOH09TfWpRbr_0rshCfV_da9Oh')
     BouncingBallsMP4=BouncingBallsTrial2.Analyze_MP4_Files()
     i=1
     for ele in BouncingBallsMP4:
         metrics = quantify_optical_flow(ele['file_content'],f'Bouncing_Balls_Instance_{i}')
-        i+=1
+        i+=1'''
