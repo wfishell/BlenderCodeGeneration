@@ -77,6 +77,7 @@ bpy.context.scene.render.image_settings.file_format = 'FFMPEG'
 bpy.context.scene.render.ffmpeg.format = 'MPEG4'
 bpy.context.scene.render.ffmpeg.codec = 'H264'
 
+
 '''):
         #in future iterations we should enable specifying specific chatgpt versions
         #I excluded that from this iteration as people might type in the wrong version and get an error
@@ -122,7 +123,7 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
             gpt_query_start_time=time.time()
             # Send request to OpenAI's API
             response = openai.ChatCompletion.create(
-                model="o1-preview-2024-09-12",
+                model="gpt-4-turbo",
                 messages=[
                     {
                         "role": "user",
@@ -162,6 +163,84 @@ bpy.context.scene.render.ffmpeg.codec = 'H264'
             #path = self.filename[:-5]+'mp4'
             path=self.filename[:-5]+'mp4'
             rendercode = f"""
+
+                        moving_objects = []
+
+                        # Threshold to determine if an object has moved (can be set to 0)
+                        threshold = 0.0001
+
+                        # Iterate over all objects in the scene
+                        for obj in bpy.context.scene.objects:
+                            if obj.type not in {'MESH', 'CURVE', 'SURFACE', 'META', 'FONT', 'ARMATURE', 'EMPTY'}:
+                                continue  # Skip cameras, lights, etc.
+
+                            # Exclude specific objects if needed (e.g., the Sun)
+                            if obj.name == 'Sun':
+                                continue
+
+                            # Sample the object's world location at the start and end frames
+                            scene.frame_set(inicio)
+                            start_loc = obj.matrix_world.to_translation().copy()
+                            scene.frame_set(fin)
+                            end_loc = obj.matrix_world.to_translation().copy()
+
+                            # Check if the object has moved
+                            if (start_loc - end_loc).length > threshold:
+                                moving_objects.append(obj)
+
+                        # Reset to the original frame
+                        scene.frame_set(actual)
+
+                        # Generate motion paths for the moving objects
+                        for obj in moving_objects:
+                            print(f"Creating motion path for: {obj.name}")
+                            recorrido = bpy.data.curves.new(f'recorrido_{obj.name}', 'CURVE')
+                            curva = bpy.data.objects.new(f'curva_{obj.name}', recorrido)
+                            bpy.context.scene.collection.objects.link(curva)
+                            recorrido.dimensions = '3D'
+
+                            # Give the curve some thickness so it's visible in the render
+                            recorrido.bevel_depth = 0.05  # Adjust thickness as needed
+                            recorrido.bevel_resolution = 4  # Increase for smoother curves
+
+                            # Create and assign material to the curve
+                            material = bpy.data.materials.new(name=f"Material_{curva.name}")
+                            material.use_nodes = True
+                            nodes = material.node_tree.nodes
+                            links = material.node_tree.links
+
+                            # Remove default Principled BSDF
+                            principled_bsdf = nodes.get('Principled BSDF')
+                            if principled_bsdf:
+                                nodes.remove(principled_bsdf)
+
+                            # Add Emission shader to make the path glow
+                            emission_node = nodes.new(type='ShaderNodeEmission')
+                            emission_node.inputs['Color'].default_value = (1, 0, 0, 1)  # Red color
+                            emission_node.inputs['Strength'].default_value = 5
+
+                            output_node = nodes.get('Material Output')
+                            links.new(emission_node.outputs['Emission'], output_node.inputs['Surface'])
+
+                            curva.data.materials.append(material)
+
+                            spline = recorrido.splines.new('BEZIER')
+                            spline.bezier_points.add(len(puntos) - 1)
+
+                            for c, n in enumerate(puntos):
+                                scene.frame_set(n)
+                                matrix = obj.matrix_world.copy()
+                                nodo = spline.bezier_points[c]
+                                nodo.co = matrix.to_translation()
+                                nodo.handle_right_type = 'AUTO'
+                                nodo.handle_left_type = 'AUTO'
+
+                            # Optionally, parent the curve to the object
+                            # curva.parent = obj
+
+                        # Reset the frame to the current frame
+                        scene.frame_set(actual)
+
                         #renders images in scene
                         bpy.context.scene.render.filepath = '{path}'
 
