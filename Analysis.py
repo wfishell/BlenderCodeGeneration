@@ -670,7 +670,7 @@ def quantify_optical_flow(file_content, Title):
 
 
 if __name__=='__main__':
-    Animation_Tests={'BouncingBalls':'1HvocLnxjpYmDs3JorPzAoOzhVzh8OQH5',
+    '''Animation_Tests={'BouncingBalls':'1HvocLnxjpYmDs3JorPzAoOzhVzh8OQH5',
                         'PlanetOrbitting':'1tP4aRR9R1qgnIP-J2hAr_srgUsWfemJr',
                         'QuiltFalling':'1fJcByWWYgWLfiwsy_nMcx4MaVMxzgFqB',
                         'DriveThroughWall':'1-l77Hr4huDb6sOR6wwLJmYzBYa5O1hqF',
@@ -696,10 +696,14 @@ if __name__=='__main__':
     # Display the plot
     plt.tight_layout()
     plt.savefig(f'./docs/Combined_Render_Times_{datetime.today().date()}.png', format="png", dpi=300, bbox_inches="tight")
-        
-    '''BouncingBallsTrial2=individual_file_analysis('1eNMcW2xOH09TfWpRbr_0rshCfV_da9Oh')
-    BouncingBallsMP4=BouncingBallsTrial2.Analyze_MP4_Files()
+    '''
+    VideoAnalysis=individual_file_analysis('19Y1A6NgnEFfC2ZPhxlR7SgxaEX-C9QuB')
+    VideoAnalysisMP4=VideoAnalysis.Analyze_MP4_Files()
     i=1
-    for ele in BouncingBallsMP4:
-        metrics = quantify_optical_flow(ele['file_content'],f'Bouncing_Balls_Instance_{i}')
-        i+=1'''
+    for ele in VideoAnalysisMP4:
+        try:
+            metrics = quantify_optical_flow(ele['file_content'],f'DominoEffect_{i}')
+            i+=1
+        except:
+            print('no motion')
+            i+=1
