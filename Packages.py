@@ -33,5 +33,5 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # OPEN AI API KEY
-openai.api_key = ()
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
