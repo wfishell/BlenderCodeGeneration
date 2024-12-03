@@ -23,11 +23,11 @@ Interfacing with repo
 4. Configure your SSH for easy access. You will be prompted to input your username:
 username@remote-server-address and password: password at this point
 5. navigate through folders and open BlenderCodeGeneration Folder.
-6. Navigate to Packages.py and input your openai API secret key. Note you will need to ensure your key has access to the model version you are using in the AnimationGeneration.py. If you are using the basic verison, you will have access to everything excluding the most recent o1 model. Modify and save python files accordingly.
+6. Add your openai API secret key to a ```.env``` file (this is read by ```Packages.py```). Note you will need to ensure your key has access to the model version you are using in the ```AnimationGeneration.py```. If you are using the basic verison, you will have access to everything excluding the most recent o1 model. Modify and save python files accordingly.
 
 Running and setting up the code
 7. You will now need to install the correct version of blender. Any version from 4.0-4.3 will be compatiable with code generated. On linux, to get 4.3.0 you can run ```sudo snap install blender --classic```
-8. install all nessacary other packages by running pip install -r requirements.txt
+8. install all nessacary other packages by running ```pip install -r requirements.txt```
 9. Now that you have set the code up to run you can create a prompt for an animation and a folder name by editing lines 7 and 9 respectively. Please note the folder name shouldn't have spaces in it, and the prompt should follow the format Create me a python scripy for a blender animation of BLANK.
 10. Outputted code, blender files and a copy of subsequent animations will be outputted at this link
 https://drive.google.com/drive/folders/1VYfJiunHJ8i8JPQIN5IIp8ISr9jp7ni8?usp=sharing

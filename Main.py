@@ -4,9 +4,9 @@ from AnimationGeneration import *
 
 if __name__=='__main__':
 
-    Prompt=("Create me a python script for a blender animation of a Planets orbitting around the Sun")
+    Prompt=("Create a python script for a blender animation of cube moving in a cirle")
     # First Instance
-    ParentFolder=MassUpload('OrbitsTest')
+    ParentFolder=MassUpload('SimpleTest')
     ParentFolderID=ParentFolder.create_subfolder()
     SubFolderID_LST=[]
     for i in range (0,3):
